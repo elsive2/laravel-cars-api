@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Car extends Model
+{
+	use HasFactory;
+
+	protected $fillable = [
+		'model',
+		'type',
+		'price',
+		'year',
+		'is_active',
+		'is_working',
+		'options_id',
+		'country_id',
+		'brand_id'
+	];
+
+	public function options()
+	{
+		return $this->belongsTo(Option::class);
+	}
+
+	public function country()
+	{
+		return $this->belongsTo(Country::class);
+	}
+
+	public function brand()
+	{
+		return $this->belongsTo(Brand::class);
+	}
+}
