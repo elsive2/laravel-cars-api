@@ -9,10 +9,20 @@ class Country extends Model
 {
 	use HasFactory;
 
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array<string>
+	 */
 	protected $fillable = [
 		'name'
 	];
 
+	/**
+	 * Get the cars which own to the country
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function cars()
 	{
 		return $this->hasMany(Car::class);
