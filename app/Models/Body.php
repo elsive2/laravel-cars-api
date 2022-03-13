@@ -27,4 +27,14 @@ class Body extends Model
 	{
 		return $this->hasMany(Option::class);
 	}
+
+	/**
+	 * Get the cars which own to the body
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+	 */
+	public function cars()
+	{
+		return $this->hasManyThrough(Car::class, Option::class);
+	}
 }

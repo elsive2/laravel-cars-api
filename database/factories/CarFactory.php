@@ -27,7 +27,7 @@ class CarFactory extends Factory
 			'year' => random_int(1900, (int)date('Y')),
 			'is_active' => random_int(0, 1),
 			'is_working' => random_int(0, 1),
-			'options_id' => Option::factory(),
+			'option_id' => Option::factory(),
 			'country_id' => Country::factory(),
 			'brand_id' => random_int(1, 3),
 		];

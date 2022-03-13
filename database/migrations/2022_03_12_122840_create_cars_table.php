@@ -22,7 +22,7 @@ return new class extends Migration
 			$table->unsignedInteger('year')->index();
 			$table->boolean('is_active')->default(false);
 			$table->boolean('is_working')->default(true);
-			$table->foreignId('options_id')->index()->constrained('options')->onDelete('cascade');
+			$table->foreignId('option_id')->index()->constrained('options')->onDelete('cascade');
 			$table->foreignId('country_id')->index()->constrained('countries');
 			$table->foreignId('brand_id')->index()->constrained('brands');
 			$table->timestamps();

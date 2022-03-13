@@ -27,4 +27,14 @@ class Engine extends Model
 	{
 		return $this->hasMany(Option::class);
 	}
+
+	/**
+	 * Get the cars which own to the engine
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+	 */
+	public function cars()
+	{
+		return $this->hasManyThrough(Car::class, Option::class);
+	}
 }
