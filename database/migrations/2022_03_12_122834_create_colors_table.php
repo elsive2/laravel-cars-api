@@ -16,7 +16,7 @@ return new class extends Migration
 		Schema::create('colors', function (Blueprint $table) {
 			$table->id();
 			$table->string('name');
-			$table->boolean('metailc')->default(false);
+			$table->boolean('metalic')->default(false);
 			$table->timestamps();
 		});
 	}
