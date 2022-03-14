@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CarStoreRequest;
 use App\Http\Resources\CarResource;
 use App\Services\CarService;
 use Illuminate\Http\Request;
@@ -46,9 +47,9 @@ class CarController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(CarStoreRequest $request)
 	{
-		//
+		return $this->carService->create($request->safe());
 	}
 
 	/**

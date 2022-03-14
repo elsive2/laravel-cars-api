@@ -23,7 +23,7 @@ class Car extends Model
 		'year',
 		'is_active',
 		'is_working',
-		'options_id',
+		'option_id',
 		'country_id',
 		'brand_id'
 	];

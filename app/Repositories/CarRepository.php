@@ -27,4 +27,9 @@ class CarRepository
 	{
 		return Car::find($id);
 	}
+
+	public function create(array $data)
+	{
+		return Car::create($data);
+	}
 }
