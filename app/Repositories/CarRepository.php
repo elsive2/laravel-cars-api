@@ -28,6 +28,12 @@ class CarRepository
 		return Car::find($id);
 	}
 
+	/**
+	 * Create a new car
+	 *
+	 * @param  array $data
+	 * @return Car
+	 */
 	public function create(array $data)
 	{
 		return Car::create($data);

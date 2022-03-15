@@ -44,12 +44,16 @@ class CarController extends Controller
 	/**
 	 * Store a newly created car in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
+	 * @param  CarStoreRequest  $request
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function store(CarStoreRequest $request)
 	{
-		return $this->carService->create($request->safe());
+		$this->carService->create($request->safe());
+
+		return response()->json([
+			'data' => 'Car has been created!'
+		]);
 	}
 
 	/**

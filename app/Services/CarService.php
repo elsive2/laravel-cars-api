@@ -18,7 +18,14 @@ class CarService
 	/**
 	 * __construct
 	 *
-	 * @param  Repository $rep
+	 * @param CarRepository $carRepository
+	 * @param CountryRepository $countryRepository
+	 * @param BrandRepository $brandRepository
+	 * @param BodyRepository $bodyRepository
+	 * @param ColorRepository $colorRepository
+	 * @param GearBoxRepository $gearBoxRepository
+	 * @param EngineRepository $engineRepository
+	 * @param OptionRepository $optionRepository
 	 * @return void
 	 */
 	public function __construct(
@@ -60,6 +67,12 @@ class CarService
 		return $car;
 	}
 
+	/**
+	 * Creates a new car
+	 *
+	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @return \App\Models\Car
+	 */
 	public function create($data)
 	{
 		$option = $this->optionRepository->create([
