@@ -7,13 +7,13 @@ use App\Models\Brand;
 class BrandRepository
 {
 	/**
-	 * Creates a new brand
+	 * Get a brand by its name
 	 *
 	 * @param  string $brand
 	 * @return Brand
 	 */
-	public function create(string $brand)
+	public function getByName(string $brand)
 	{
-		return Brand::create(['name' => $brand]);
+		return Brand::whereName($brand)->first();
 	}
 }

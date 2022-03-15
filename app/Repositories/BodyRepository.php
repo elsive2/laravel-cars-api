@@ -7,13 +7,13 @@ use App\Models\Body;
 class BodyRepository
 {
 	/**
-	 * Creates a new body
+	 * Get a body by its body
 	 *
 	 * @param  string $body
 	 * @return Body
 	 */
-	public function create(string $body)
+	public function getByName(string $body)
 	{
-		return Body::create(['name' => $body]);
+		return Body::whereName($body)->first();
 	}
 }

@@ -7,13 +7,13 @@ use App\Models\GearBox;
 class GearBoxRepository
 {
 	/**
-	 * Creates a new gear box
+	 * Get a gear box by its name
 	 *
 	 * @param  string $gearBox
 	 * @return GearBox
 	 */
-	public function create(string $gearBox)
+	public function getByName(string $gearBox)
 	{
-		return GearBox::create(['name' => $gearBox]);
+		return GearBox::whereName($gearBox)->first();
 	}
 }

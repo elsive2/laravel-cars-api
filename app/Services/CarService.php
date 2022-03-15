@@ -80,10 +80,10 @@ class CarService
 			'drive_unit' => $data->drive_unit,
 			'mileage' => $data->mileage,
 			'engine_capacity' => $data->engine_capacity,
-			'body_id' => $this->bodyRepository->create($data->body)->id,
-			'engine_id' => $this->engineRepository->create($data->engine)->id,
-			'gear_box_id' => $this->gearBoxRepository->create($data->gear_box)->id,
-			'color_id' => $this->colorRepository->create($data->color)->id,
+			'body_id' => $this->bodyRepository->getByName($data->body)->id,
+			'engine_id' => $this->engineRepository->getByName($data->engine)->id,
+			'gear_box_id' => $this->gearBoxRepository->getByName($data->gear_box)->id,
+			'color_id' => $this->colorRepository->getByName($data->color)->id,
 		]);
 
 		return $this->carRepository->create([
@@ -92,8 +92,8 @@ class CarService
 			'price' => $data->price,
 			'year' => $data->year,
 			'is_working' => $data->is_working,
-			'country_id' => $this->countryRepository->create($data->country)->id,
-			'brand_id' => $this->brandRepository->create($data->brand)->id,
+			'country_id' => $this->countryRepository->getByName($data->country)->id,
+			'brand_id' => $this->brandRepository->getByName($data->brand)->id,
 			'option_id' => $option->id,
 		]);
 	}

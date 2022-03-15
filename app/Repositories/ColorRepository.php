@@ -7,13 +7,13 @@ use App\Models\Color;
 class ColorRepository
 {
 	/**
-	 * Creates a new color
+	 * Get a color by its name
 	 *
 	 * @param  string $color
-	 * @return Create
+	 * @return Color
 	 */
-	public function create(string $color)
+	public function getByName(string $color)
 	{
-		return Color::create(['name' => $color]);
+		return Color::whereName($color)->first();
 	}
 }

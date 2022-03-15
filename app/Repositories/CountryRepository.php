@@ -7,13 +7,13 @@ use App\Models\Country;
 class CountryRepository
 {
 	/**
-	 * Creates a new country
+	 * Get a country by its name
 	 *
 	 * @param  string $country
 	 * @return Country
 	 */
-	public function create(string $country)
+	public function getByName(string $country)
 	{
-		return Country::create(['name' => $country]);
+		return Country::whereName($country)->first();
 	}
 }

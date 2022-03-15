@@ -7,13 +7,13 @@ use App\Models\Engine;
 class EngineRepository
 {
 	/**
-	 * Creates a new engine
+	 * Get an engine by its id
 	 *
 	 * @param  string $engine
 	 * @return Engine
 	 */
-	public function create(string $engine)
+	public function getByName(string $engine)
 	{
-		return Engine::create(['name' => $engine]);
+		return Engine::whereName($engine)->first();
 	}
 }
