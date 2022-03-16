@@ -85,7 +85,7 @@ class EngineController extends Controller
 	{
 		if ($this->engineService->delete($id)) {
 			return response()->json([
-				'data' => 'Engine has been updated!'
+				'data' => 'Engine has been deleted!'
 			]);
 		}
 		return response()->json([

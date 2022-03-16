@@ -38,4 +38,20 @@ class Engine extends Model
 	{
 		return $this->hasManyThrough(Car::class, Option::class);
 	}
+
+	/**
+	 * method "boot"
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function (Engine $engine) {
+			$engine->options()->update([
+				'engine_id' => null
+			]);
+		});
+	}
 }

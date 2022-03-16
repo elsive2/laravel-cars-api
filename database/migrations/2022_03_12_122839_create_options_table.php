@@ -20,10 +20,10 @@ return new class extends Migration
 			$table->enum('drive_unit', CarsConstant::DRIVE_UNIT);
 			$table->unsignedBigInteger('mileage');
 			$table->unsignedInteger('engine_capacity');
-			$table->foreignId('body_id')->index()->constrained('bodies');
-			$table->foreignId('engine_id')->index()->constrained('engines');
-			$table->foreignId('gear_box_id')->index()->constrained('gear_boxes');
-			$table->foreignId('color_id')->index()->constrained('colors');
+			$table->foreignId('body_id')->index()->nullable()->constrained('bodies');
+			$table->foreignId('engine_id')->index()->nullable()->constrained('engines');
+			$table->foreignId('gear_box_id')->index()->nullable()->constrained('gear_boxes');
+			$table->foreignId('color_id')->index()->nullable()->constrained('colors');
 			$table->timestamps();
 		});
 	}

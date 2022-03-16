@@ -84,7 +84,7 @@ class BodyController extends Controller
 	{
 		if ($this->bodyService->delete($id)) {
 			return response()->json([
-				'data' => 'Body has been updated!'
+				'data' => 'Body has been deleted!'
 			]);
 		}
 		return response()->json([

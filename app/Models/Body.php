@@ -38,4 +38,20 @@ class Body extends Model
 	{
 		return $this->hasManyThrough(Car::class, Option::class);
 	}
+
+	/**
+	 * method "boot"
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function (Body $body) {
+			$body->options()->update([
+				'body_id' => null
+			]);
+		});
+	}
 }
