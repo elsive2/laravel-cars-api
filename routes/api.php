@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+	BodyController,
 	CarController
 };
 
@@ -15,5 +16,7 @@ use App\Http\Controllers\{
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::apiResource('bodies', BodyController::class);
 
 Route::apiResource('cars', CarController::class);
