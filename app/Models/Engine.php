@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\NameSluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Engine extends Model
 {
-	use HasFactory;
+	use HasFactory, NameSluggable;
 
 	/**
 	 * The attributes that are mass assignable.

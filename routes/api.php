@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
 	BodyController,
-	CarController
+	CarController,
+	EngineController
 };
 
 /*
@@ -18,5 +19,7 @@ use App\Http\Controllers\{
 */
 
 Route::apiResource('bodies', BodyController::class);
+
+Route::apiResource('engines', EngineController::class);
 
 Route::apiResource('cars', CarController::class);

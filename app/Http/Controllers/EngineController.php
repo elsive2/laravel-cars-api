@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BodyRequest;
+use App\Services\EngineService;
 use App\Http\Resources\NameResource;
-use App\Services\BodyService;
+use App\Http\Requests\EngineRequest;
 
-class BodyController extends Controller
+class EngineController extends Controller
 {
 	/**
 	 * __construct
 	 *
-	 * @param BodyService $bodyService
+	 * @param EngineService $engineService
 	 * @return void
 	 */
 	public function __construct(
-		private BodyService $bodyService
+		private EngineService $engineService
 	) {
 	}
 
@@ -26,47 +26,48 @@ class BodyController extends Controller
 	 */
 	public function index()
 	{
-		return NameResource::collection($this->bodyService->all());
+
+		return NameResource::collection($this->engineService->all());
 	}
 
 	/**
 	 * Display the specified body.
 	 *
 	 * @param  int  $id
-	 * @return BodyResource
+	 * @return NameResource
 	 */
 	public function show(int $id)
 	{
-		return new NameResource($this->bodyService->getById($id));
+		return new NameResource($this->engineService->getById($id));
 	}
 
 	/**
 	 * Store a newly created body in storage.
 	 *
-	 * @param  BodyRequest  $request
+	 * @param  EngineRequest  $request
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function store(BodyRequest $request)
+	public function store(EngineRequest $request)
 	{
-		$this->bodyService->create($request->safe());
+		$this->engineService->create($request->safe());
 
 		return response()->json([
-			'data' => 'Body has been created!'
+			'data' => 'Engine has been created!'
 		]);
 	}
 
 	/**
 	 * Update the specified body in storage.
 	 *
-	 * @param  BodyRequest  $request
+	 * @param  EngineRequest  $request
 	 * @param  int  $id
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function update(BodyRequest $request, int $id)
+	public function update(EngineRequest $request, int $id)
 	{
-		if ($this->bodyService->update($request->safe(), $id)) {
+		if ($this->engineService->update($request->safe(), $id)) {
 			return response()->json([
-				'data' => 'Body has been updated!'
+				'data' => 'Engine has been updated!'
 			]);
 		}
 		return response()->json([
@@ -82,9 +83,9 @@ class BodyController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		if ($this->bodyService->delete($id)) {
+		if ($this->engineService->delete($id)) {
 			return response()->json([
-				'data' => 'Body has been updated!'
+				'data' => 'Engine has been updated!'
 			]);
 		}
 		return response()->json([
