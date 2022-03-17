@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\NameSluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Body extends Model
 {
-	use HasFactory, NameSluggable;
+	use HasFactory;
 
 	/**
 	 * The attributes that are mass assignable.
