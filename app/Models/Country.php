@@ -27,4 +27,20 @@ class Country extends Model
 	{
 		return $this->hasMany(Car::class);
 	}
+
+	/**
+	 * method "boot"
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function (Country $country) {
+			$country->cars()->update([
+				'country_id' => null
+			]);
+		});
+	}
 }

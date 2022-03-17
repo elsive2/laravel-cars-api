@@ -23,8 +23,8 @@ return new class extends Migration
 			$table->boolean('is_active')->default(false);
 			$table->boolean('is_working')->default(true);
 			$table->foreignId('option_id')->index()->constrained('options')->onDelete('cascade');
-			$table->foreignId('country_id')->index()->constrained('countries');
-			$table->foreignId('brand_id')->index()->constrained('brands');
+			$table->foreignId('country_id')->nullable()->index()->constrained('countries');
+			$table->foreignId('brand_id')->nullable()->index()->constrained('brands');
 			$table->timestamps();
 			$table->softDeletes();
 		});

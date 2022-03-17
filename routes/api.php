@@ -5,6 +5,7 @@ use App\Http\Controllers\{
 	BodyController,
 	CarController,
 	ColorController,
+	CountryController,
 	EngineController,
 	GearBoxController
 };
@@ -24,5 +25,6 @@ Route::apiResource('bodies', BodyController::class);
 Route::apiResource('engines', EngineController::class);
 Route::apiResource('gear_boxes', GearBoxController::class);
 Route::apiResource('colors', ColorController::class);
+Route::apiResource('countries', CountryController::class);
 
 Route::apiResource('cars', CarController::class);
