@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
 	BodyController,
 	CarController,
+	ColorController,
 	EngineController,
 	GearBoxController
 };
@@ -22,5 +23,6 @@ use App\Http\Controllers\{
 Route::apiResource('bodies', BodyController::class);
 Route::apiResource('engines', EngineController::class);
 Route::apiResource('gear_boxes', GearBoxController::class);
+Route::apiResource('colors', ColorController::class);
 
 Route::apiResource('cars', CarController::class);

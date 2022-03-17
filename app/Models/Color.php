@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\NameSluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Color extends Model
 {
-	use HasFactory;
+	use HasFactory, NameSluggable;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -36,5 +37,21 @@ class Color extends Model
 	public function cars()
 	{
 		return $this->hasManyThrough(Car::class, Option::class);
+	}
+
+	/**
+	 * method "boot"
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function (Color $color) {
+			$color->options()->update([
+				'color_id' => null
+			]);
+		});
 	}
 }
