@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
 	BodyController,
+	BrandController,
 	CarController,
 	ColorController,
 	CountryController,
@@ -26,5 +27,6 @@ Route::apiResource('engines', EngineController::class);
 Route::apiResource('gear_boxes', GearBoxController::class);
 Route::apiResource('colors', ColorController::class);
 Route::apiResource('countries', CountryController::class);
+Route::apiResource('brands', BrandController::class);
 
 Route::apiResource('cars', CarController::class);

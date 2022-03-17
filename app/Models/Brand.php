@@ -27,4 +27,20 @@ class Brand extends Model
 	{
 		return $this->hasMany(Car::class);
 	}
+
+	/**
+	 * method "boot"
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function (Brand $brand) {
+			$brand->cars()->update([
+				'brand_id' => null
+			]);
+		});
+	}
 }
