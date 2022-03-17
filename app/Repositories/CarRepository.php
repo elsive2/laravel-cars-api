@@ -14,7 +14,9 @@ class CarRepository
 	 */
 	public function all($toLoad)
 	{
-		return Car::with($toLoad)->get();
+		return Car::with($toLoad)
+			->where('is_active', 1)
+			->get();
 	}
 
 	/**
