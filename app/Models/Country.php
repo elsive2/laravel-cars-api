@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\CountryObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,10 +38,6 @@ class Country extends Model
 	{
 		parent::boot();
 
-		static::deleting(function (Country $country) {
-			$country->cars()->update([
-				'country_id' => null
-			]);
-		});
+		Country::observe(CountryObserver::class);
 	}
 }

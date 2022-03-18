@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\GearBoxObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -47,10 +48,6 @@ class GearBox extends Model
 	{
 		parent::boot();
 
-		static::deleting(function (GearBox $gearBox) {
-			$gearBox->options()->update([
-				'gear_box_id' => null
-			]);
-		});
+		GearBox::observe(GearBoxObserver::class);
 	}
 }

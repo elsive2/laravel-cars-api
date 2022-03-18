@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\EngineObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -47,10 +48,6 @@ class Engine extends Model
 	{
 		parent::boot();
 
-		static::deleting(function (Engine $engine) {
-			$engine->options()->update([
-				'engine_id' => null
-			]);
-		});
+		Engine::observe(EngineObserver::class);
 	}
 }

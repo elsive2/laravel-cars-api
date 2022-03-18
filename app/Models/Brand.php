@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\BrandObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,10 +38,6 @@ class Brand extends Model
 	{
 		parent::boot();
 
-		static::deleting(function (Brand $brand) {
-			$brand->cars()->update([
-				'brand_id' => null
-			]);
-		});
+		Brand::observe(BrandObserver::class);
 	}
 }

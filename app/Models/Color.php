@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\ColorObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,10 +49,6 @@ class Color extends Model
 	{
 		parent::boot();
 
-		static::deleting(function (Color $color) {
-			$color->options()->update([
-				'color_id' => null
-			]);
-		});
+		Color::observe(ColorObserver::class);
 	}
 }

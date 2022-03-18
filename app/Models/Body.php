@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\BodyObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -47,10 +48,6 @@ class Body extends Model
 	{
 		parent::boot();
 
-		static::deleting(function (Body $body) {
-			$body->options()->update([
-				'body_id' => null
-			]);
-		});
+		Body::observe(BodyObserver::class);
 	}
 }
