@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
+use App\Http\Controllers\Api\v1\{
 	BodyController,
 	BrandController,
 	CarController,
@@ -22,11 +22,13 @@ use App\Http\Controllers\{
 |
 */
 
-Route::apiResource('bodies', BodyController::class);
-Route::apiResource('engines', EngineController::class);
-Route::apiResource('gear_boxes', GearBoxController::class);
-Route::apiResource('colors', ColorController::class);
-Route::apiResource('countries', CountryController::class);
-Route::apiResource('brands', BrandController::class);
+Route::prefix('v1')->group(function () {
+	Route::apiResource('bodies', BodyController::class);
+	Route::apiResource('engines', EngineController::class);
+	Route::apiResource('gear_boxes', GearBoxController::class);
+	Route::apiResource('colors', ColorController::class);
+	Route::apiResource('countries', CountryController::class);
+	Route::apiResource('brands', BrandController::class);
 
-Route::apiResource('cars', CarController::class);
+	Route::apiResource('cars', CarController::class);
+});

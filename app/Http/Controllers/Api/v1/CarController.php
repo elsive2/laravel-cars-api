@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\CarStoreRequest;
-use App\Http\Resources\CarResource;
+use App\Http\Resources\v1\CarResource;
 use App\Services\CarService;
 use Illuminate\Http\Request;
 

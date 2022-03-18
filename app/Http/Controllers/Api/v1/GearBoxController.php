@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\GearBoxRequest;
-use App\Http\Resources\NameResource;
+use App\Http\Resources\v1\NameResource;
 use App\Services\GearBoxService;
 
 class GearBoxController extends Controller

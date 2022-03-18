@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\ColorStoreRequest;
 use App\Http\Requests\ColorUpdateRequest;
-use App\Http\Resources\ColorResource;
+use App\Http\Resources\v1\ColorResource;
 use App\Services\ColorService;
 
 class ColorController extends Controller

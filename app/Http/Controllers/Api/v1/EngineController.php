@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Services\EngineService;
-use App\Http\Resources\NameResource;
+use App\Http\Resources\v1\NameResource;
 use App\Http\Requests\EngineRequest;
 
 class EngineController extends Controller
