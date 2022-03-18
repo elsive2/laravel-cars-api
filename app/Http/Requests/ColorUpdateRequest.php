@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ColorRequest extends FormRequest
+class ColorUpdateRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -24,7 +25,8 @@ class ColorRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => ['required', 'string', 'unique:colors,name']
+			'name' => ['nullable', 'string', Rule::unique('colors', 'name')->ignore($this->name)],
+			'metalic' => ['nullable', 'boolean']
 		];
 	}
 }

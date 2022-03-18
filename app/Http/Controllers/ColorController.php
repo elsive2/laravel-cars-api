@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ColorRequest;
-use App\Http\Resources\NameResource;
+use App\Http\Requests\ColorStoreRequest;
+use App\Http\Requests\ColorUpdateRequest;
+use App\Http\Resources\ColorResource;
 use App\Services\ColorService;
 
 class ColorController extends Controller
@@ -26,7 +27,7 @@ class ColorController extends Controller
 	 */
 	public function index()
 	{
-		return NameResource::collection($this->colorService->all());
+		return ColorResource::collection($this->colorService->all());
 	}
 
 	/**
@@ -37,16 +38,16 @@ class ColorController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new NameResource($this->colorService->getById($id));
+		return new ColorResource($this->colorService->getById($id));
 	}
 
 	/**
 	 * Store a newly created color in storage.
 	 *
-	 * @param  ColorRequest  $request
+	 * @param  ColorStoreRequest  $request
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function store(ColorRequest $request)
+	public function store(ColorStoreRequest $request)
 	{
 		$this->colorService->create($request->safe());
 
@@ -62,7 +63,7 @@ class ColorController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function update(ColorRequest $request, int $id)
+	public function update(ColorUpdateRequest $request, int $id)
 	{
 		if ($this->colorService->update($request->safe(), $id)) {
 			return response()->json([
