@@ -3,14 +3,14 @@
 namespace App\Services;
 
 /**
- * @property bool code
- * @property \Illuminate\Database\Eloquent\Model|array data
+ * @property int|null code
+ * @property mixed|null data
  */
 class ResultService
 {
 	protected $fields = [
 		'code' 	=> null,
-		'data' 	=> [],
+		'data' 	=> null,
 	];
 
 	public function __construct($data = [])

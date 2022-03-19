@@ -39,7 +39,7 @@ class Controller extends BaseController
 	 * @param  \Illuminate\Http\Resources\Json\JsonResource	$resourceClass
 	 * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\JsonResponse
 	 */
-	protected function resultResources(ResultService $result, $resourceClass)
+	protected function resultCollection(ResultService $result, $resourceClass)
 	{
 		if ($result->isSuccess()) {
 			return $resourceClass::collection($result->data);

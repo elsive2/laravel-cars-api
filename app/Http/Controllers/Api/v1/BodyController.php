@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\BodyRequest;
-use App\Http\Resources\NameResource;
+use App\Http\Resources\v1\NameResource;
 use App\Services\BodyService;
 
 class BodyController extends Controller
@@ -26,9 +26,8 @@ class BodyController extends Controller
 	 */
 	public function index()
 	{
-		return NameResource::collection($this->bodyService->all());
+		return $this->resultCollection($this->bodyService->all(), NameResource::class);
 	}
-
 	/**
 	 * Display the specified body.
 	 *
@@ -37,7 +36,7 @@ class BodyController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new NameResource($this->bodyService->getById($id));
+		return $this->resultResource($this->bodyService->getById($id), NameResource::class);
 	}
 
 	/**
@@ -48,11 +47,7 @@ class BodyController extends Controller
 	 */
 	public function store(BodyRequest $request)
 	{
-		$this->bodyService->create($request->safe());
-
-		return response()->json([
-			'data' => 'Body has been created!'
-		]);
+		return $this->result($this->bodyService->create($request->safe()));
 	}
 
 	/**
@@ -64,14 +59,7 @@ class BodyController extends Controller
 	 */
 	public function update(BodyRequest $request, int $id)
 	{
-		if ($this->bodyService->update($request->safe(), $id)) {
-			return response()->json([
-				'data' => 'Body has been updated!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->bodyService->update($request->safe(), $id));
 	}
 
 	/**
@@ -82,13 +70,6 @@ class BodyController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		if ($this->bodyService->delete($id)) {
-			return response()->json([
-				'data' => 'Body has been deleted!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->bodyService->delete($id));
 	}
 }

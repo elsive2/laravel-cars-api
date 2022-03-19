@@ -4,47 +4,47 @@ namespace App\Services;
 
 abstract class BaseService
 {
-	const DEFAULT_MESSAGES = [
+	const MESSAGES = [
 		403 => 'Forbidden error!',
 		404 => 'Not found!',
 		422 => 'Validate error has occured!',
-		500 => 'The service error has occured!',
+		500 => 'Something went wrong!',
 	];
 
 	/**
 	 * @param  string $message
 	 * @return ResultService
 	 */
-	protected function errValidate($message = self::DEFAULT_MESSAGES[422])
+	protected function errValidate($message = null)
 	{
-		return $this->message(422, $message);
+		return $this->message(422, $message ?? self::MESSAGES[422]);
 	}
 
 	/**
 	 * @param  string $message
 	 * @return ResultService
 	 */
-	protected function errForbidden($message = self::DEFAULT_MESSAGES[403])
+	protected function errForbidden($message = null)
 	{
-		return $this->message(403, $message);
+		return $this->message(403, $message ?? self::MESSAGES[403]);
 	}
 
 	/**
 	 * @param  string $message
 	 * @return ResultService
 	 */
-	protected function errNotFound($message = self::DEFAULT_MESSAGES[404])
+	protected function errNotFound($message = null)
 	{
-		return $this->message(404, $message);
+		return $this->message(404, $message ?? self::MESSAGES[404]);
 	}
 
 	/**
 	 * @param  string $message
 	 * @return ResultService
 	 */
-	protected function errService($message = self::DEFAULT_MESSAGES[500])
+	protected function errService($message = null)
 	{
-		return $this->message(500, $message);
+		return $this->message(500, $message ?? self::MESSAGES[500]);
 	}
 
 	/**
@@ -60,7 +60,7 @@ abstract class BaseService
 	 * @param  mixed $data
 	 * @return ResultService
 	 */
-	protected function successData(string $data)
+	protected function successData($data)
 	{
 		return new ResultService([
 			'data' => $data,
