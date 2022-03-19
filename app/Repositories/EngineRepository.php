@@ -7,7 +7,7 @@ use App\Models\Engine;
 class EngineRepository
 {
 	/**
-	 * Get all the engines
+	 * Get all engines
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */

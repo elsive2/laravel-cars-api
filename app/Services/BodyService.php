@@ -18,7 +18,7 @@ class BodyService extends BaseService
 	}
 
 	/**
-	 * Get all the bodies
+	 * Get all bodies
 	 *
 	 * @return ResultService
 	 */

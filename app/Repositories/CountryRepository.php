@@ -3,12 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Country;
-use Illuminate\Support\Facades\Schema;
 
 class CountryRepository
 {
 	/**
-	 * Get all the countrys
+	 * Get all the countries
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */
@@ -29,7 +28,7 @@ class CountryRepository
 	}
 
 	/**
-	 * Create a new Country
+	 * Create a new сountry
 	 *
 	 * @param  array $data
 	 * @return Country
@@ -43,7 +42,7 @@ class CountryRepository
 	 * Update the country
 	 *
 	 * @param  array $data
-	 * @param  Country $Country
+	 * @param  Country $сountry
 	 * @return bool
 	 */
 	public function update(array $data, Country $country)

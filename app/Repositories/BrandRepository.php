@@ -7,7 +7,7 @@ use App\Models\Brand;
 class BrandRepository
 {
 	/**
-	 * Get all the brands
+	 * Get all brands
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */

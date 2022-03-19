@@ -18,7 +18,7 @@ class ColorService extends BaseService
 	}
 
 	/**
-	 * Get all the colors
+	 * Get all colors
 	 *
 	 * @return ResultService
 	 */

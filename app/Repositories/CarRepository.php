@@ -7,7 +7,7 @@ use App\Models\Car;
 class CarRepository
 {
 	/**
-	 * Get all the cars
+	 * Get all cars
 	 *
 	 * @param  array|string $toLoad
 	 * @return \Illuminate\Database\Eloquent\Collection

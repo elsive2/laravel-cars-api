@@ -7,7 +7,7 @@ use App\Models\Body;
 class BodyRepository
 {
 	/**
-	 * Get all the bodies
+	 * Get all bodies
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */

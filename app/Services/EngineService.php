@@ -18,7 +18,7 @@ class EngineService extends BaseService
 	}
 
 	/**
-	 * Get all the engines
+	 * Get all engines
 	 *
 	 * @return ResultService
 	 */

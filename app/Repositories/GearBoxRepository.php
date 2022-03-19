@@ -7,7 +7,7 @@ use App\Models\GearBox;
 class GearBoxRepository
 {
 	/**
-	 * Get all the bodies
+	 * Get all bodies
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */

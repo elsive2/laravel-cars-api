@@ -28,7 +28,7 @@ class ColorRepository
 	}
 
 	/**
-	 * Create a new Color
+	 * Create a new color
 	 *
 	 * @param  array $data
 	 * @return Color
@@ -42,7 +42,7 @@ class ColorRepository
 	 * Update the color
 	 *
 	 * @param  array $data
-	 * @param  Color $Color
+	 * @param  Color $color
 	 * @return bool
 	 */
 	public function update(array $data, Color $color)

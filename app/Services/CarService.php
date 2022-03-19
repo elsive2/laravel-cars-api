@@ -41,7 +41,7 @@ class CarService
 	}
 
 	/**
-	 * Get all the cars
+	 * Get all cars
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */

@@ -18,7 +18,7 @@ class BrandService extends BaseService
 	}
 
 	/**
-	 * Get all the brands
+	 * Get all brands
 	 *
 	 * @return ResultService
 	 */

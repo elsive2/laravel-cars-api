@@ -18,7 +18,7 @@ class CountryService extends BaseService
 	}
 
 	/**
-	 * Get all the countries
+	 * Get all countries
 	 *
 	 * @return ResultService
 	 */

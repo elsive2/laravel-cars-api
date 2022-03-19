@@ -18,7 +18,7 @@ class GearBoxService extends BaseService
 	}
 
 	/**
-	 * Get all the gear boxes
+	 * Get all gear boxes
 	 *
 	 * @return ResultService
 	 */
