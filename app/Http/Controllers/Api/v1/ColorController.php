@@ -27,7 +27,7 @@ class ColorController extends Controller
 	 */
 	public function index()
 	{
-		return ColorResource::collection($this->colorService->all());
+		return $this->resultCollection($this->colorService->all(), ColorResource::class);
 	}
 
 	/**
@@ -38,7 +38,7 @@ class ColorController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new ColorResource($this->colorService->getById($id));
+		return $this->resultResource($this->colorService->getById($id), ColorResource::class);
 	}
 
 	/**
@@ -49,11 +49,7 @@ class ColorController extends Controller
 	 */
 	public function store(ColorStoreRequest $request)
 	{
-		$this->colorService->create($request->safe());
-
-		return response()->json([
-			'data' => 'Color has been created!'
-		]);
+		return $this->result($this->colorService->create($request->safe()));
 	}
 
 	/**
@@ -65,14 +61,7 @@ class ColorController extends Controller
 	 */
 	public function update(ColorUpdateRequest $request, int $id)
 	{
-		if ($this->colorService->update($request->safe(), $id)) {
-			return response()->json([
-				'data' => 'Color has been updated!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->colorService->update($request->safe(), $id));
 	}
 
 	/**
@@ -83,13 +72,6 @@ class ColorController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		if ($this->colorService->delete($id)) {
-			return response()->json([
-				'data' => 'Color has been deleted!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->colorService->delete($id));
 	}
 }

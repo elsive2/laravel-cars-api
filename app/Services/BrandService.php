@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\BrandRepository;
 
-class BrandService
+class BrandService extends BaseService
 {
 	/**
 	 * __construct
@@ -20,37 +20,56 @@ class BrandService
 	/**
 	 * Get all the brands
 	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
+	 * @return ResultService
 	 */
 	public function all()
 	{
-		return $this->brandRepository->all();
+		$brands = $this->brandRepository->all();
+
+		if (!$brands) {
+			return $this->errService();
+		}
+		return $this->successData($brands);
 	}
 
 	/**
 	 * Get a brand by its id
 	 *
 	 * @param  int $id
-	 * @return \App\Models\Brand
+	 * @return ResultService
 	 */
 	public function getById(int $id)
 	{
 		$brand = $this->brandRepository->getById($id);
 
-		abort_if(is_null($brand), 404);
+		if (is_null($brand)) {
+			return $this->errNotFound();
+		}
 
-		return $brand;
+		if (!($brand instanceof \App\Models\Brand)) {
+			return $this->errValidate('The element isn\'t a brand model!');
+		}
+		return $this->successData($brand);
 	}
 
 	/**
 	 * Create a brand
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
-	 * @return \App\Models\Brand
+	 * @return ResultService
 	 */
 	public function create($data)
 	{
-		return $this->brandRepository->create($data->toArray());
+		$brand = $this->brandRepository->create($data->toArray());
+
+		if (!($brand instanceof \App\Models\Brand)) {
+			return $this->errValidate('The element isn\'t a brand model!');
+		}
+
+		if (!$brand) {
+			return $this->errService();
+		}
+		return $this->successMessage('Brand has been created!');
 	}
 
 	/**
@@ -58,25 +77,28 @@ class BrandService
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
 	 * @param  int $id
-	 * @return bool
+	 * @return ResultService
 	 */
 	public function update($data, int $id)
 	{
-		$brand = $this->getById($id);
+		$isUpdated = $this->brandRepository->update($data->toArray(), $this->getById($id)->data);
 
-		return $this->brandRepository->update($data->toArray(), $brand);
+		if (!$isUpdated) {
+			return $this->errService();
+		}
+		return $this->successMessage('Brand has been updated!');
 	}
 
 	/**
 	 * Delete a brand by its id
 	 *
 	 * @param  int $id
-	 * @return bool|null
+	 * @return ResultService
 	 */
 	public function delete(int $id)
 	{
-		$brand = $this->getById($id);
+		$this->brandRepository->delete($this->getById($id)->data);
 
-		return $this->brandRepository->delete($brand);
+		return $this->successMessage('Brand has been deleted!');
 	}
 }

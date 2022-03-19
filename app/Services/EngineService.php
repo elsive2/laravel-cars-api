@@ -4,13 +4,13 @@ namespace App\Services;
 
 use App\Repositories\EngineRepository;
 
-class EngineService
+class EngineService extends BaseService
 {
 	/**
 	 * __construct
 	 *
 	 * @param EngineRepository $engineRepository
-	 * @return void
+	 * @return ResultService
 	 */
 	public function __construct(
 		private EngineRepository $engineRepository
@@ -20,37 +20,56 @@ class EngineService
 	/**
 	 * Get all the engines
 	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
+	 * @return ResultService
 	 */
 	public function all()
 	{
-		return $this->engineRepository->all();
+		$engines = $this->engineRepository->all();
+
+		if (!$engines) {
+			return $this->errService();
+		}
+		return $this->successData($engines);
 	}
 
 	/**
 	 * Get an engine by its id
 	 *
 	 * @param  int $id
-	 * @return \App\Models\Engine
+	 * @return ResultService
 	 */
 	public function getById(int $id)
 	{
 		$engine = $this->engineRepository->getById($id);
 
-		abort_if(is_null($engine), 404);
+		if (is_null($engine)) {
+			return $this->errNotFound();
+		}
 
-		return $engine;
+		if (!($engine instanceof \App\Models\Engine)) {
+			return $this->errValidate('The element isn\'t a engine model!');
+		}
+		return $this->successData($engine);
 	}
 
 	/**
 	 * Create an engine
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
-	 * @return \App\Models\Engine
+	 * @return ResultService
 	 */
 	public function create($data)
 	{
-		return $this->engineRepository->create($data->toArray());
+		$engine = $this->engineRepository->create($data->toArray());
+
+		if (!($engine instanceof \App\Models\Engine)) {
+			return $this->errValidate('The element isn\'t a engine model!');
+		}
+
+		if (!$engine) {
+			return $this->errService();
+		}
+		return $this->successMessage('Engine has been created!');
 	}
 
 	/**
@@ -58,25 +77,28 @@ class EngineService
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
 	 * @param  int $id
-	 * @return bool
+	 * @return ResultService
 	 */
 	public function update($data, int $id)
 	{
-		$engine = $this->getById($id);
+		$isUpdated = $this->engineRepository->update($data->toArray(), $this->getById($id)->data);
 
-		return $this->engineRepository->update($data->toArray(), $engine);
+		if (!$isUpdated) {
+			return $this->errService();
+		}
+		return $this->successMessage('Engine has been updated!');
 	}
 
 	/**
 	 * Delete an engine by its id
 	 *
 	 * @param  int $id
-	 * @return bool|null
+	 * @return ResultService
 	 */
 	public function delete(int $id)
 	{
-		$engine = $this->getById($id);
+		$this->engineRepository->delete($this->getById($id)->data);
 
-		return $this->engineRepository->delete($engine);
+		return $this->successMessage('Engine has been deleted!');
 	}
 }

@@ -26,7 +26,7 @@ class BrandController extends Controller
 	 */
 	public function index()
 	{
-		return NameResource::collection($this->brandService->all());
+		return $this->resultCollection($this->brandService->all(), NameResource::class);
 	}
 
 	/**
@@ -37,7 +37,7 @@ class BrandController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new NameResource($this->brandService->getById($id));
+		return $this->resultResource($this->brandService->getById($id), NameResource::class);
 	}
 
 	/**
@@ -48,11 +48,7 @@ class BrandController extends Controller
 	 */
 	public function store(BrandRequest $request)
 	{
-		$this->brandService->create($request->safe());
-
-		return response()->json([
-			'data' => 'Brand has been created!'
-		]);
+		return $this->result($this->brandService->create($request->safe()));
 	}
 
 	/**
@@ -64,14 +60,7 @@ class BrandController extends Controller
 	 */
 	public function update(BrandRequest $request, int $id)
 	{
-		if ($this->brandService->update($request->safe(), $id)) {
-			return response()->json([
-				'data' => 'Brand has been updated!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->brandService->update($request->safe(), $id));
 	}
 
 	/**
@@ -82,13 +71,6 @@ class BrandController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		if ($this->brandService->delete($id)) {
-			return response()->json([
-				'data' => 'Brand has been deleted!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->brandService->delete($id));
 	}
 }

@@ -26,7 +26,7 @@ class CountryController extends Controller
 	 */
 	public function index()
 	{
-		return NameResource::collection($this->countryService->all());
+		return $this->resultCollection($this->countryService->all(), NameResource::class);
 	}
 
 	/**
@@ -37,7 +37,7 @@ class CountryController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new NameResource($this->countryService->getById($id));
+		return $this->resultResource($this->countryService->getById($id), NameResource::class);
 	}
 
 	/**
@@ -48,11 +48,7 @@ class CountryController extends Controller
 	 */
 	public function store(CountryRequest $request)
 	{
-		$this->countryService->create($request->safe());
-
-		return response()->json([
-			'data' => 'Country has been created!'
-		]);
+		return $this->result($this->countryService->create($request->safe()));
 	}
 
 	/**
@@ -64,14 +60,7 @@ class CountryController extends Controller
 	 */
 	public function update(CountryRequest $request, int $id)
 	{
-		if ($this->countryService->update($request->safe(), $id)) {
-			return response()->json([
-				'data' => 'Country has been updated!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->countryService->update($request->safe(), $id));
 	}
 
 	/**
@@ -82,13 +71,6 @@ class CountryController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		if ($this->countryService->delete($id)) {
-			return response()->json([
-				'data' => 'Country has been deleted!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->countryService->delete($id));
 	}
 }

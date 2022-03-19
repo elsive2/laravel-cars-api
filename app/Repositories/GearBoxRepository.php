@@ -17,7 +17,7 @@ class GearBoxRepository
 	}
 
 	/**
-	 * Get a body by its id
+	 * Get a gear box by its id
 	 *
 	 * @param  int $id
 	 * @return GearBox|null
@@ -28,7 +28,7 @@ class GearBoxRepository
 	}
 
 	/**
-	 * Create a new body
+	 * Create a new gear box
 	 *
 	 * @param  array $data
 	 * @return GearBox
@@ -39,25 +39,25 @@ class GearBoxRepository
 	}
 
 	/**
-	 * Update the body
+	 * Update the gear box
 	 *
 	 * @param  array $data
-	 * @param  GearBox $body
+	 * @param  GearBox $gearBox
 	 * @return bool
 	 */
-	public function update(array $data, GearBox $body)
+	public function update(array $data, GearBox $gearBox)
 	{
-		return $body->update($data);
+		return $gearBox->update($data);
 	}
 
 	/**
-	 * Delete the body
+	 * Delete the gear box
 	 *
-	 * @param  GearBox $body
+	 * @param  GearBox $gearBox
 	 * @return bool|null
 	 */
-	public function delete(GearBox $body)
+	public function delete(GearBox $gearBox)
 	{
-		return $body->delete();
+		return $gearBox->delete();
 	}
 }

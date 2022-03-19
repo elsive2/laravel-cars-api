@@ -26,8 +26,7 @@ class EngineController extends Controller
 	 */
 	public function index()
 	{
-
-		return NameResource::collection($this->engineService->all());
+		return $this->resultCollection($this->engineService->all(), NameResource::class);
 	}
 
 	/**
@@ -38,7 +37,7 @@ class EngineController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new NameResource($this->engineService->getById($id));
+		return $this->resultResource($this->engineService->getById($id), NameResource::class);
 	}
 
 	/**
@@ -49,11 +48,7 @@ class EngineController extends Controller
 	 */
 	public function store(EngineRequest $request)
 	{
-		$this->engineService->create($request->safe());
-
-		return response()->json([
-			'data' => 'Engine has been created!'
-		]);
+		return $this->result($this->engineService->create($request->safe()));
 	}
 
 	/**
@@ -65,14 +60,7 @@ class EngineController extends Controller
 	 */
 	public function update(EngineRequest $request, int $id)
 	{
-		if ($this->engineService->update($request->safe(), $id)) {
-			return response()->json([
-				'data' => 'Engine has been updated!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->engineService->update($request->safe(), $id));
 	}
 
 	/**
@@ -83,13 +71,6 @@ class EngineController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		if ($this->engineService->delete($id)) {
-			return response()->json([
-				'data' => 'Engine has been deleted!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->engineService->delete($id));
 	}
 }

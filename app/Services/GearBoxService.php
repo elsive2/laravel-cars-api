@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\GearBoxRepository;
 
-class GearBoxService
+class GearBoxService extends BaseService
 {
 	/**
 	 * __construct
@@ -20,37 +20,56 @@ class GearBoxService
 	/**
 	 * Get all the gear boxes
 	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
+	 * @return ResultService
 	 */
 	public function all()
 	{
-		return $this->gearBoxRepository->all();
+		$gearBoxes = $this->gearBoxRepository->all();
+
+		if (!$gearBoxes) {
+			return $this->errService();
+		}
+		return $this->successData($gearBoxes);
 	}
 
 	/**
 	 * Get a gear box by its id
 	 *
 	 * @param  int $id
-	 * @return \App\Models\GearBox
+	 * @return ResultService
 	 */
 	public function getById(int $id)
 	{
 		$gearBox = $this->gearBoxRepository->getById($id);
 
-		abort_if(is_null($gearBox), 404);
+		if (is_null($gearBox)) {
+			return $this->errNotFound();
+		}
 
-		return $gearBox;
+		if (!($gearBox instanceof \App\Models\GearBox)) {
+			return $this->errValidate('The element isn\'t a gear box model!');
+		}
+		return $this->successData($gearBox);
 	}
 
 	/**
 	 * Create a gear box
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
-	 * @return \App\Models\GearBox
+	 * @return ResultService
 	 */
 	public function create($data)
 	{
-		return $this->gearBoxRepository->create($data->toArray());
+		$gearBox = $this->gearBoxRepository->create($data->toArray());
+
+		if (!($gearBox instanceof \App\Models\GearBox)) {
+			return $this->errValidate('The element isn\'t a gear box model!');
+		}
+
+		if (!$gearBox) {
+			return $this->errService();
+		}
+		return $this->successMessage('Gear box has been created!');
 	}
 
 	/**
@@ -58,25 +77,28 @@ class GearBoxService
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
 	 * @param  int $id
-	 * @return bool
+	 * @return ResultService
 	 */
 	public function update($data, int $id)
 	{
-		$gearBox = $this->getById($id);
+		$isUpdated = $this->gearBoxRepository->update($data->toArray(), $this->getById($id)->data);
 
-		return $this->gearBoxRepository->update($data->toArray(), $gearBox);
+		if (!$isUpdated) {
+			return $this->errService();
+		}
+		return $this->successMessage('Gear box has been updated!');
 	}
 
 	/**
 	 * Delete a gear box by its id
 	 *
 	 * @param  int $id
-	 * @return bool|null
+	 * @return ResultService
 	 */
 	public function delete(int $id)
 	{
-		$gearBox = $this->getById($id);
+		$this->gearBoxRepository->delete($this->getById($id)->data);
 
-		return $this->gearBoxRepository->delete($gearBox);
+		return $this->successMessage('Gear box has been deleted!');
 	}
 }

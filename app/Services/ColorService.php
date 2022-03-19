@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\ColorRepository;
 
-class ColorService
+class ColorService extends BaseService
 {
 	/**
 	 * __construct
@@ -20,37 +20,56 @@ class ColorService
 	/**
 	 * Get all the colors
 	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
+	 * @return ResultService
 	 */
 	public function all()
 	{
-		return $this->colorRepository->all();
+		$colors = $this->colorRepository->all();
+
+		if (!$colors) {
+			return $this->errService();
+		}
+		return $this->successData($colors);
 	}
 
 	/**
 	 * Get a color by its id
 	 *
 	 * @param  int $id
-	 * @return \App\Models\Color
+	 * @return ResultService
 	 */
 	public function getById(int $id)
 	{
 		$color = $this->colorRepository->getById($id);
 
-		abort_if(is_null($color), 404);
+		if (is_null($color)) {
+			return $this->errNotFound();
+		}
 
-		return $color;
+		if (!($color instanceof \App\Models\Color)) {
+			return $this->errValidate('The element isn\'t a color model!');
+		}
+		return $this->successData($color);
 	}
 
 	/**
 	 * Create a color
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
-	 * @return \App\Models\Color
+	 * @return ResultService
 	 */
 	public function create($data)
 	{
-		return $this->colorRepository->create($data->toArray());
+		$color = $this->colorRepository->create($data->toArray());
+
+		if (!($color instanceof \App\Models\Color)) {
+			return $this->errValidate('The element isn\'t a color model!');
+		}
+
+		if (!$color) {
+			return $this->errService();
+		}
+		return $this->successMessage('Color has been created!');
 	}
 
 	/**
@@ -58,25 +77,28 @@ class ColorService
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
 	 * @param  int $id
-	 * @return bool
+	 * @return ResultService
 	 */
 	public function update($data, int $id)
 	{
-		$color = $this->getById($id);
+		$isUpdated = $this->colorRepository->update($data->toArray(), $this->getById($id)->data);
 
-		return $this->colorRepository->update($data->toArray(), $color);
+		if (!$isUpdated) {
+			return $this->errService();
+		}
+		return $this->successMessage('Color has been updated!');
 	}
 
 	/**
 	 * Delete a color by its id
 	 *
 	 * @param  int $id
-	 * @return bool|null
+	 * @return ResultService
 	 */
 	public function delete(int $id)
 	{
-		$color = $this->getById($id);
+		$this->colorRepository->delete($this->getById($id)->data);
 
-		return $this->colorRepository->delete($color);
+		return $this->successMessage('Color has been deleted!');
 	}
 }

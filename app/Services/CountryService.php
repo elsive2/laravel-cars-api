@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\CountryRepository;
 
-class CountryService
+class CountryService extends BaseService
 {
 	/**
 	 * __construct
@@ -20,37 +20,56 @@ class CountryService
 	/**
 	 * Get all the countries
 	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
+	 * @return ResultService
 	 */
 	public function all()
 	{
-		return $this->countryRepository->all();
+		$countries = $this->countryRepository->all();
+
+		if (!$countries) {
+			return $this->errService();
+		}
+		return $this->successData($countries);
 	}
 
 	/**
 	 * Get a country by its id
 	 *
 	 * @param  int $id
-	 * @return \App\Models\Country
+	 * @return ResultService
 	 */
 	public function getById(int $id)
 	{
 		$country = $this->countryRepository->getById($id);
 
-		abort_if(is_null($country), 404);
+		if (is_null($country)) {
+			return $this->errNotFound();
+		}
 
-		return $country;
+		if (!($country instanceof \App\Models\Country)) {
+			return $this->errValidate('The element isn\'t a country model!');
+		}
+		return $this->successData($country);
 	}
 
 	/**
 	 * Create a country
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
-	 * @return \App\Models\Country
+	 * @return ResultService
 	 */
 	public function create($data)
 	{
-		return $this->countryRepository->create($data->toArray());
+		$country = $this->countryRepository->create($data->toArray());
+
+		if (!($country instanceof \App\Models\Country)) {
+			return $this->errValidate('The element isn\'t a country model!');
+		}
+
+		if (!$country) {
+			return $this->errService();
+		}
+		return $this->successMessage('Country has been created!');
 	}
 
 	/**
@@ -58,25 +77,28 @@ class CountryService
 	 *
 	 * @param  \Illuminate\Support\ValidatedInput $data
 	 * @param  int $id
-	 * @return bool
+	 * @return ResultService
 	 */
 	public function update($data, int $id)
 	{
-		$country = $this->getById($id);
+		$isUpdated = $this->countryRepository->update($data->toArray(), $this->getById($id)->data);
 
-		return $this->countryRepository->update($data->toArray(), $country);
+		if (!$isUpdated) {
+			return $this->errService();
+		}
+		return $this->successMessage('Country has been updated!');
 	}
 
 	/**
 	 * Delete a country by its id
 	 *
 	 * @param  int $id
-	 * @return bool|null
+	 * @return ResultService
 	 */
 	public function delete(int $id)
 	{
-		$country = $this->getById($id);
+		$this->countryRepository->delete($this->getById($id)->data);
 
-		return $this->countryRepository->delete($country);
+		return $this->successMessage('Country has been deleted!');
 	}
 }

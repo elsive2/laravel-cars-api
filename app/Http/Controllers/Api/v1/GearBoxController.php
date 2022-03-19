@@ -26,7 +26,7 @@ class GearBoxController extends Controller
 	 */
 	public function index()
 	{
-		return NameResource::collection($this->gearBoxService->all());
+		return $this->resultCollection($this->gearBoxService->all(), NameResource::class);
 	}
 
 	/**
@@ -37,7 +37,7 @@ class GearBoxController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new NameResource($this->gearBoxService->getById($id));
+		return $this->resultResource($this->gearBoxService->getById($id), NameResource::class);
 	}
 
 	/**
@@ -48,11 +48,7 @@ class GearBoxController extends Controller
 	 */
 	public function store(GearBoxRequest $request)
 	{
-		$this->gearBoxService->create($request->safe());
-
-		return response()->json([
-			'data' => 'Gear Box has been created!'
-		]);
+		return $this->result($this->gearBoxService->create($request->safe()));
 	}
 
 	/**
@@ -64,14 +60,7 @@ class GearBoxController extends Controller
 	 */
 	public function update(GearBoxRequest $request, int $id)
 	{
-		if ($this->gearBoxService->update($request->safe(), $id)) {
-			return response()->json([
-				'data' => 'Gear Box has been updated!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->gearBoxService->update($request->safe(), $id));
 	}
 
 	/**
@@ -82,13 +71,6 @@ class GearBoxController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		if ($this->gearBoxService->delete($id)) {
-			return response()->json([
-				'data' => 'Gear Box has been deleted!'
-			]);
-		}
-		return response()->json([
-			'data' => 'Something went wrong!'
-		]);
+		return $this->result($this->gearBoxService->delete($id));
 	}
 }
