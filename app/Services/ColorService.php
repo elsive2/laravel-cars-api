@@ -81,7 +81,13 @@ class ColorService extends BaseService
 	 */
 	public function update($data, int $id)
 	{
-		$isUpdated = $this->colorRepository->update($data->toArray(), $this->getById($id)->data);
+		$color = $this->getById($id);
+
+		if (!$color->isSuccess()) {
+			return $color;
+		}
+
+		$isUpdated = $this->colorRepository->update($data->toArray(), $color->data);
 
 		if (!$isUpdated) {
 			return $this->errService();
@@ -97,7 +103,13 @@ class ColorService extends BaseService
 	 */
 	public function delete(int $id)
 	{
-		$this->colorRepository->delete($this->getById($id)->data);
+		$color = $this->getById($id);
+
+		if (!$color->isSuccess()) {
+			return $color;
+		}
+
+		$this->colorRepository->delete($color->data);
 
 		return $this->successMessage('Color has been deleted!');
 	}

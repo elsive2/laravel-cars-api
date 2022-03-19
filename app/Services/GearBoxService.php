@@ -81,7 +81,13 @@ class GearBoxService extends BaseService
 	 */
 	public function update($data, int $id)
 	{
-		$isUpdated = $this->gearBoxRepository->update($data->toArray(), $this->getById($id)->data);
+		$gearBox = $this->getById($id);
+
+		if (!$gearBox->isSuccess()) {
+			return $gearBox;
+		}
+
+		$isUpdated = $this->gearBoxRepository->update($data->toArray(), $gearBox->data);
 
 		if (!$isUpdated) {
 			return $this->errService();
@@ -97,7 +103,13 @@ class GearBoxService extends BaseService
 	 */
 	public function delete(int $id)
 	{
-		$this->gearBoxRepository->delete($this->getById($id)->data);
+		$gearBox = $this->getById($id);
+
+		if (!$gearBox->isSuccess()) {
+			return $gearBox;
+		}
+
+		$this->gearBoxRepository->delete($gearBox->data);
 
 		return $this->successMessage('Gear box has been deleted!');
 	}

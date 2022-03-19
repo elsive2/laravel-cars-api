@@ -81,7 +81,13 @@ class BrandService extends BaseService
 	 */
 	public function update($data, int $id)
 	{
-		$isUpdated = $this->brandRepository->update($data->toArray(), $this->getById($id)->data);
+		$brand = $this->getById($id);
+
+		if (!$brand->isSuccess()) {
+			return $brand;
+		}
+
+		$isUpdated = $this->brandRepository->update($data->toArray(), $brand->data);
 
 		if (!$isUpdated) {
 			return $this->errService();
@@ -97,7 +103,13 @@ class BrandService extends BaseService
 	 */
 	public function delete(int $id)
 	{
-		$this->brandRepository->delete($this->getById($id)->data);
+		$brand = $this->getById($id);
+
+		if (!$brand->isSuccess()) {
+			return $brand;
+		}
+
+		$this->brandRepository->delete($brand->data);
 
 		return $this->successMessage('Brand has been deleted!');
 	}

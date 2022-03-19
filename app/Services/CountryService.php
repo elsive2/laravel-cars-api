@@ -81,7 +81,13 @@ class CountryService extends BaseService
 	 */
 	public function update($data, int $id)
 	{
-		$isUpdated = $this->countryRepository->update($data->toArray(), $this->getById($id)->data);
+		$country = $this->getById($id);
+
+		if (!$country->isSuccess()) {
+			return $country;
+		}
+
+		$isUpdated = $this->countryRepository->update($data->toArray(), $country->data);
 
 		if (!$isUpdated) {
 			return $this->errService();
@@ -97,7 +103,13 @@ class CountryService extends BaseService
 	 */
 	public function delete(int $id)
 	{
-		$this->countryRepository->delete($this->getById($id)->data);
+		$country = $this->getById($id);
+
+		if (!$country->isSuccess()) {
+			return $country;
+		}
+
+		$this->countryRepository->delete($country->data);
 
 		return $this->successMessage('Country has been deleted!');
 	}

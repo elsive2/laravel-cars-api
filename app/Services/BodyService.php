@@ -81,7 +81,13 @@ class BodyService extends BaseService
 	 */
 	public function update($data, int $id)
 	{
-		$isUpdated = $this->bodyRepository->update($data->toArray(), $this->getById($id)->data);
+		$brand = $this->getById($id);
+
+		if (!$brand->isSuccess()) {
+			return $brand;
+		}
+
+		$isUpdated = $this->bodyRepository->update($data->toArray(), $brand->data);
 
 		if (!$isUpdated) {
 			return $this->errService();
@@ -97,7 +103,13 @@ class BodyService extends BaseService
 	 */
 	public function delete(int $id)
 	{
-		$this->bodyRepository->delete($this->getById($id)->data);
+		$brand = $this->getById($id);
+
+		if (!$brand->isSuccess()) {
+			return $brand;
+		}
+
+		$this->bodyRepository->delete($brand->data);
 
 		return $this->successMessage('Body has been deleted!');
 	}

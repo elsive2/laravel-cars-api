@@ -81,7 +81,13 @@ class EngineService extends BaseService
 	 */
 	public function update($data, int $id)
 	{
-		$isUpdated = $this->engineRepository->update($data->toArray(), $this->getById($id)->data);
+		$engine = $this->getById($id);
+
+		if (!$engine->isSuccess()) {
+			return $engine;
+		}
+
+		$isUpdated = $this->engineRepository->update($data->toArray(), $engine->data);
 
 		if (!$isUpdated) {
 			return $this->errService();
@@ -97,7 +103,13 @@ class EngineService extends BaseService
 	 */
 	public function delete(int $id)
 	{
-		$this->engineRepository->delete($this->getById($id)->data);
+		$engine = $this->getById($id);
+
+		if (!$engine->isSuccess()) {
+			return $engine;
+		}
+
+		$this->engineRepository->delete($engine->data);
 
 		return $this->successMessage('Engine has been deleted!');
 	}
