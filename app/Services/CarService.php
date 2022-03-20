@@ -118,4 +118,23 @@ class CarService extends BaseService
 		}
 		return $this->successMessage('Car has been updated!');
 	}
+
+	/**
+	 * Delete a car by its id
+	 *
+	 * @param  int $id
+	 * @return ResultService
+	 */
+	public function delete(int $id)
+	{
+		$car = $this->getById($id);
+
+		if (!$car->isSuccess()) {
+			return $car;
+		}
+
+		$this->carRepository->delete($car->data);
+
+		return $this->successMessage('Car has been deleted!');
+	}
 }

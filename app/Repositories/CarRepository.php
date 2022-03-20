@@ -52,4 +52,15 @@ class CarRepository
 	{
 		return $car->update($data);
 	}
+
+	/**
+	 * Delete the car
+	 *
+	 * @param  Car $car
+	 * @return bool|null
+	 */
+	public function delete(Car $car)
+	{
+		return $car->delete();
+	}
 }
