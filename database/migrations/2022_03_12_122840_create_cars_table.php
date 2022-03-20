@@ -21,7 +21,7 @@ return new class extends Migration
 			$table->unsignedBigInteger('price')->index();
 			$table->unsignedInteger('year')->index();
 			$table->boolean('is_active')->default(false);
-			$table->boolean('is_working')->default(true);
+			$table->boolean('is_working')->default(true)->index();
 			$table->foreignId('option_id')->index()->constrained('options')->onDelete('cascade');
 			$table->foreignId('country_id')->nullable()->index()->constrained('countries');
 			$table->foreignId('brand_id')->nullable()->index()->constrained('brands');

@@ -18,8 +18,8 @@ return new class extends Migration
 			$table->id();
 			$table->enum('wheel_position', CarsConstant::WHEEL_POSITION);
 			$table->enum('drive_unit', CarsConstant::DRIVE_UNIT);
-			$table->unsignedBigInteger('mileage');
-			$table->unsignedInteger('engine_capacity');
+			$table->unsignedBigInteger('mileage')->index();
+			$table->unsignedInteger('engine_capacity')->index();
 			$table->foreignId('body_id')->index()->nullable()->constrained('bodies');
 			$table->foreignId('engine_id')->index()->nullable()->constrained('engines');
 			$table->foreignId('gear_box_id')->index()->nullable()->constrained('gear_boxes');
