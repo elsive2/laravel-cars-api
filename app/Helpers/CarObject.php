@@ -55,4 +55,24 @@ class CarObject
 			'brand_id',
 		]);
 	}
+
+	/**
+	 * Check if the data options have
+	 *
+	 * @return bool
+	 */
+	public function optionDataHas()
+	{
+		return !empty($this->getOptionsData());
+	}
+
+	/**
+	 * Check if the car options have
+	 *
+	 * @return bool
+	 */
+	public function carDataHas()
+	{
+		return !empty($this->getCarData());
+	}
 }

@@ -90,4 +90,32 @@ class CarService extends BaseService
 		}
 		return $this->successMessage('Success! Your car will be published after moderation!');
 	}
+
+	/**
+	 * Update a car by its id
+	 *
+	 * @param  \App\Helpers\CarObject $data
+	 * @param  int $id
+	 * @return ResultService
+	 */
+	public function update($data, int $id)
+	{
+		$car = $this->getById($id);
+
+		if (!$car->isSuccess()) {
+			return $car;
+		}
+
+		if ($data->optionDataHas()) {
+			if (!$this->optionRepository->updateCarOptions($car->data, $data->getOptionsData())) {
+				return $this->errService();
+			}
+		}
+		if ($data->carDataHas()) {
+			if (!$this->carRepository->update($car->data, $data->getCarData())) {
+				return $this->errService();
+			}
+		}
+		return $this->successMessage('Car has been updated!');
+	}
 }

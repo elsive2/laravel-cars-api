@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Helpers\CarObject;
 use App\Http\Requests\CarStoreRequest;
+use App\Http\Requests\CarUpdateRequest;
 use App\Http\Resources\v1\CarResource;
 use App\Services\CarService;
 use Illuminate\Http\Request;
@@ -62,9 +63,11 @@ class CarController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update(CarUpdateRequest $request, int $id)
 	{
-		//
+		return $this->result(
+			$this->carService->update(new CarObject($request->safe()), $id)
+		);
 	}
 
 	/**

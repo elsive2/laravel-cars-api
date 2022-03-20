@@ -40,4 +40,16 @@ class CarRepository
 	{
 		return Car::create($data);
 	}
+
+	/**
+	 * Update the car
+	 *
+	 * @param  Car $car
+	 * @param  array $data
+	 * @return bool
+	 */
+	public function update(Car $car, array $data)
+	{
+		return $car->update($data);
+	}
 }

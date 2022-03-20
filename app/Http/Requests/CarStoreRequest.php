@@ -36,10 +36,10 @@ class CarStoreRequest extends FormRequest
 			'wheel_position'	=> ['required', Rule::in(CarsConstant::WHEEL_POSITION)],
 			'engine_capacity' 	=> ['required', 'digits_between:1,50'],
 			'country_id' 		=> ['required', 'exists:countries,id'],
-			'brand_id' 			=> ['required', 'string', 'exists:brands,id'],
-			'body_id' 			=> ['required', 'string', 'exists:bodies,id'],
-			'engine_id' 		=> ['required', 'string', 'exists:engines,id'],
-			'gear_box_id'		=> ['required', 'string', 'exists:gear_boxes,id'],
+			'brand_id' 			=> ['required', 'exists:brands,id'],
+			'body_id' 			=> ['required', 'exists:bodies,id'],
+			'engine_id' 		=> ['required', 'exists:engines,id'],
+			'gear_box_id'		=> ['required', 'exists:gear_boxes,id'],
 			'color_id' 			=> ['required', 'exists:colors,id'],
 		];
 	}

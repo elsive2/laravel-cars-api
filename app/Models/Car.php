@@ -34,7 +34,7 @@ class Car extends Model
 	 */
 	public function options()
 	{
-		return $this->belongsTo(Option::class);
+		return $this->belongsTo(Option::class, 'option_id');
 	}
 
 	/**
