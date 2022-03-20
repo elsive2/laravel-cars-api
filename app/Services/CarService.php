@@ -23,28 +23,46 @@ class CarService extends BaseService
 	/**
 	 * Get all cars
 	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
+	 * @return ResultService
 	 */
 	public function all()
 	{
-		$toLoad = ['brand', 'country'];
+		$toLoad = [
+			'brand',
+			'country',
+			'images',
+			'options',
+			'options.body',
+			'options.gearBox',
+			'options.engine',
+			'options.color'
+		];
 
-		return $this->carRepository->all($toLoad);
+		$cars = $this->carRepository->all($toLoad);
+
+		if (!$cars) {
+			return $this->errService();
+		}
+		return $this->successData($cars);
 	}
 
 	/**
 	 * Get the car by its id
 	 *
 	 * @param  int $id
-	 * @return \App\Models\Car
+	 * @return ResultService
 	 */
 	public function getById(int $id)
 	{
 		$car = $this->carRepository->getById($id);
 
-		abort_if(is_null($car), 404);
-
-		return $car;
+		if (is_null($car)) {
+			return $this->errNotFound('Car hasn\'t been found!');
+		}
+		if (!($car instanceof \App\Models\Car)) {
+			return $this->errValidate('The element isn\'t a car model');
+		}
+		return $this->successData($car);
 	}
 
 	/**

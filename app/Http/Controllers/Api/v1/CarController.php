@@ -28,7 +28,7 @@ class CarController extends Controller
 	 */
 	public function index()
 	{
-		return CarResource::collection($this->carService->all());
+		return $this->resultCollection($this->carService->all(), CarResource::class);
 	}
 
 	/**
@@ -39,7 +39,7 @@ class CarController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return new CarResource($this->carService->getById($id));
+		return $this->resultResource($this->carService->getById($id), CarResource::class);
 	}
 
 	/**
