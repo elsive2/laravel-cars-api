@@ -2,40 +2,20 @@
 
 namespace App\Services;
 
-use App\Repositories\{
-	BodyRepository,
-	BrandRepository,
-	CountryRepository,
-	CarRepository,
-	ColorRepository,
-	EngineRepository,
-	GearBoxRepository,
-	OptionRepository
-};
+use App\Repositories\CarRepository;
+use App\Repositories\OptionRepository;
 
-class CarService
+class CarService extends BaseService
 {
 	/**
 	 * __construct
 	 *
 	 * @param CarRepository $carRepository
-	 * @param CountryRepository $countryRepository
-	 * @param BrandRepository $brandRepository
-	 * @param BodyRepository $bodyRepository
-	 * @param ColorRepository $colorRepository
-	 * @param GearBoxRepository $gearBoxRepository
-	 * @param EngineRepository $engineRepository
 	 * @param OptionRepository $optionRepository
 	 * @return void
 	 */
 	public function __construct(
 		private CarRepository $carRepository,
-		private CountryRepository $countryRepository,
-		private BrandRepository $brandRepository,
-		private BodyRepository $bodyRepository,
-		private ColorRepository $colorRepository,
-		private GearBoxRepository $gearBoxRepository,
-		private EngineRepository $engineRepository,
 		private OptionRepository $optionRepository,
 	) {
 	}
@@ -70,31 +50,26 @@ class CarService
 	/**
 	 * Creates a new car
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
-	 * @return \App\Models\Car
+	 * @param  \App\Helpers\CarObject $data
+	 * @return ResultService
 	 */
 	public function create($data)
 	{
-		$option = $this->optionRepository->create([
-			'wheel_position' => $data->wheel_position,
-			'drive_unit' => $data->drive_unit,
-			'mileage' => $data->mileage,
-			'engine_capacity' => $data->engine_capacity,
-			'body_id' => $this->bodyRepository->getByName($data->body)->id,
-			'engine_id' => $this->engineRepository->getByName($data->engine)->id,
-			'gear_box_id' => $this->gearBoxRepository->getByName($data->gear_box)->id,
-			'color_id' => $this->colorRepository->getByName($data->color)->id,
-		]);
+		$option = $this->optionRepository->create($data->getOptionsData());
 
-		return $this->carRepository->create([
-			'model' => $data->model,
-			'type' => $data->type,
-			'price' => $data->price,
-			'year' => $data->year,
-			'is_working' => $data->is_working,
-			'country_id' => $this->countryRepository->getByName($data->country)->id,
-			'brand_id' => $this->brandRepository->getByName($data->brand)->id,
-			'option_id' => $option->id,
-		]);
+		if (is_null($option)) {
+			return $this->errNotFound('Options hasn\'t been found!');
+		}
+		if (!($option instanceof \App\Models\Option)) {
+			return $this->errValidate('The element isn\'t a option model!');
+		}
+
+		$carData = $data->getCarData();
+		$carData['option_id'] = $option->id;
+
+		if (!$this->carRepository->create($carData)) {
+			return $this->errService();
+		}
+		return $this->successMessage('Success! Your car will be published after moderation!');
 	}
 }

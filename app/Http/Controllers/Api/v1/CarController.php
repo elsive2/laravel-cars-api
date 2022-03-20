@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Helpers\CarObject;
 use App\Http\Requests\CarStoreRequest;
 use App\Http\Resources\v1\CarResource;
 use App\Services\CarService;
@@ -49,11 +50,9 @@ class CarController extends Controller
 	 */
 	public function store(CarStoreRequest $request)
 	{
-		$this->carService->create($request->safe());
-
-		return response()->json([
-			'data' => 'Car has been created!'
-		]);
+		return $this->result(
+			$this->carService->create(new CarObject($request->safe()))
+		);
 	}
 
 	/**
