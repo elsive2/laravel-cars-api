@@ -21,6 +21,6 @@ class FilterService
 		return $builder->orderBy(
 			request('sort') ?: config('api.cars.sort'),
 			request('order') ?: config('api.cars.order')
-		)->get();
+		)->paginate(request('per_page') ?: config('api.cars.per_page'));
 	}
 }

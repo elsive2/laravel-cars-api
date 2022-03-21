@@ -10,7 +10,8 @@ return [
     |
     */
 	'cars' => [
-		'order' => 'asc',
-		'sort' 	=> 'id'
+		'order' 	=> 'asc',
+		'sort' 		=> 'id',
+		'per_page' 	=> 10
 	]
 ];
