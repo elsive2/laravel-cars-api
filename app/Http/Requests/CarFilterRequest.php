@@ -45,6 +45,8 @@ class CarFilterRequest extends FormRequest
 			'color_metalic' 		=> ['nullable', 'boolean'],
 			'country' 				=> ['nullable', 'exists:countries,name'],
 			'brand' 				=> ['nullable', 'exists:brands,name'],
+			'order'					=> ['nullable', 'in:asc,desc'],
+			'sort'					=> ['nullable', 'in:model,price,year']
 		];
 	}
 

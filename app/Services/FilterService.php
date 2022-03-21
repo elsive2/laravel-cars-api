@@ -18,6 +18,9 @@ class FilterService
 				$builder = $filter->handle($builder);
 			}
 		}
-		return $builder->get();
+		return $builder->orderBy(
+			request('sort') ?: config('api.cars.sort'),
+			request('order') ?: config('api.cars.order')
+		)->get();
 	}
 }
