@@ -7,6 +7,17 @@ use App\Repositories\OptionRepository;
 
 class CarService extends BaseService
 {
+	const TOLOAD = [
+		'brand',
+		'country',
+		'images',
+		'options',
+		'options.body',
+		'options.gearBox',
+		'options.engine',
+		'options.color'
+	];
+
 	/**
 	 * __construct
 	 *
@@ -27,18 +38,11 @@ class CarService extends BaseService
 	 */
 	public function all()
 	{
-		$toLoad = [
-			'brand',
-			'country',
-			'images',
-			'options',
-			'options.body',
-			'options.gearBox',
-			'options.engine',
-			'options.color'
+		$filters = [
+			new \App\Http\Filters\ModelFilter
 		];
 
-		$cars = $this->carRepository->all($toLoad);
+		$cars = FilterService::handle($this->carRepository->all(self::TOLOAD), $filters);
 
 		if (!$cars) {
 			return $this->errService();

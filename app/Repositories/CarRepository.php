@@ -10,13 +10,11 @@ class CarRepository
 	 * Get all cars
 	 *
 	 * @param  array|string $toLoad
-	 * @return \Illuminate\Database\Eloquent\Collection
+	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
 	public function all($toLoad)
 	{
-		return Car::with($toLoad)
-			->where('is_active', 1)
-			->get();
+		return Car::with($toLoad)->where('is_active', 1);
 	}
 
 	/**

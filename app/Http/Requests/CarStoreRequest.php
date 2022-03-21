@@ -29,7 +29,7 @@ class CarStoreRequest extends FormRequest
 			'model' 			=> ['required', 'string', 'max:255'],
 			'type' 				=> ['required', Rule::in(CarsConstant::TYPE)],
 			'price' 			=> ['required', 'integer'],
-			'year' 				=> ['required', 'integer'],
+			'year' 				=> ['required', 'digits_between:1885,' . date('Y')],
 			'is_working' 		=> ['required', 'boolean'],
 			'mileage'			=> ['required', 'integer', 'min:0'],
 			'drive_unit'		=> ['required', Rule::in(CarsConstant::DRIVE_UNIT)],
@@ -42,5 +42,17 @@ class CarStoreRequest extends FormRequest
 			'gear_box_id'		=> ['required', 'exists:gear_boxes,id'],
 			'color_id' 			=> ['required', 'exists:colors,id'],
 		];
+	}
+
+	/**
+	 * Prepare for validation
+	 *
+	 * @return $this
+	 */
+	protected function prepareForValidation()
+	{
+		$this->merge([
+			'is_working' => $this->boolean('is_working'),
+		]);
 	}
 }

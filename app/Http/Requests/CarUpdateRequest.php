@@ -29,7 +29,7 @@ class CarUpdateRequest extends FormRequest
 			'model' 			=> ['nullable', 'string', 'max:255'],
 			'type' 				=> ['nullable', Rule::in(CarsConstant::TYPE)],
 			'price' 			=> ['nullable', 'integer'],
-			'year' 				=> ['nullable', 'integer'],
+			'year' 				=> ['nullable', 'digits_between:1885,' . date('Y')],
 			'is_working' 		=> ['nullable', 'boolean'],
 			'mileage'			=> ['nullable', 'integer', 'min:0'],
 			'drive_unit'		=> ['nullable', Rule::in(CarsConstant::DRIVE_UNIT)],
@@ -42,5 +42,17 @@ class CarUpdateRequest extends FormRequest
 			'gear_box_id'		=> ['nullable', 'string', 'exists:gear_boxes,id'],
 			'color_id' 			=> ['nullable', 'exists:colors,id'],
 		];
+	}
+
+	/**
+	 * Prepare for validation
+	 *
+	 * @return $this
+	 */
+	protected function prepareForValidation()
+	{
+		$this->merge([
+			'is_working' => $this->boolean('is_working'),
+		]);
 	}
 }

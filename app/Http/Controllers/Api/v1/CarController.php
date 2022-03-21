@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Helpers\CarObject;
+use App\Http\Requests\CarFilterRequest;
 use App\Http\Requests\CarStoreRequest;
 use App\Http\Requests\CarUpdateRequest;
 use App\Http\Resources\v1\CarResource;
 use App\Services\CarService;
-use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
@@ -27,7 +27,7 @@ class CarController extends Controller
 	 *
 	 * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
 	 */
-	public function index()
+	public function index(CarFilterRequest $request)
 	{
 		return $this->resultCollection($this->carService->all(), CarResource::class);
 	}
