@@ -28,6 +28,7 @@ class CarService extends BaseService
 	public function __construct(
 		private CarRepository $carRepository,
 		private OptionRepository $optionRepository,
+		private ImageService $imageService,
 	) {
 	}
 
@@ -85,7 +86,18 @@ class CarService extends BaseService
 		$carData = $data->getCarData();
 		$carData['option_id'] = $option->id;
 
-		if (!$this->carRepository->create($carData)) {
+		$car = $this->carRepository->create($carData);
+
+		// interacting with images
+		if (!empty($images = $data->data->images_id)) {
+			$savingResult = $this->imageService->addImagesToModel($car, $images);
+
+			if (!$savingResult->isSuccess()) {
+				return $savingResult;
+			}
+		}
+
+		if (!$car) {
 			return $this->errService();
 		}
 		return $this->successMessage('Success! Your car will be published after moderation!');

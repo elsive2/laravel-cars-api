@@ -41,6 +41,7 @@ class CarStoreRequest extends FormRequest
 			'engine_id' 		=> ['required', 'exists:engines,id'],
 			'gear_box_id'		=> ['required', 'exists:gear_boxes,id'],
 			'color_id' 			=> ['required', 'exists:colors,id'],
+			'images_id'			=> ['required', 'exists:images,id', 'array'],
 		];
 	}
 
@@ -53,6 +54,7 @@ class CarStoreRequest extends FormRequest
 	{
 		$this->merge([
 			'is_working' => $this->boolean('is_working'),
+			'images_id' => explode(',', $this->images_id),
 		]);
 	}
 }
