@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\CarObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -65,5 +66,17 @@ class Car extends Model
 	public function images()
 	{
 		return $this->hasMany(Image::class);
+	}
+
+	/**
+	 * method "boot"
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		Car::observe(CarObserver::class);
 	}
 }

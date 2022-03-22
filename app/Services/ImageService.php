@@ -117,9 +117,9 @@ class ImageService extends BaseService
 			return $image;
 		}
 
-		Storage::delete($image->path);
+		Storage::delete($image->data->name);
 
-		$this->imageRepository->delete($image);
+		$this->imageRepository->delete($image->data);
 
 		return $this->successMessage('Image has been deleted!');
 	}
