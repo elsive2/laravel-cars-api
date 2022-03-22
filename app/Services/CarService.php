@@ -38,7 +38,7 @@ class CarService extends BaseService
 	 */
 	public function all()
 	{
-		$cars = FilterService::handle($this->carRepository->all(self::TOLOAD), $this->getCarFilters());
+		$cars = CarFilterService::handle($this->carRepository->all(self::TOLOAD));
 
 		if (!$cars) {
 			return $this->errService();
@@ -136,36 +136,5 @@ class CarService extends BaseService
 		$this->carRepository->delete($car->data);
 
 		return $this->successMessage('Car has been deleted!');
-	}
-
-	/**
-	 * Get all the car filters
-	 *
-	 * @return array<\App\Http\Filters\QueryFilter>
-	 */
-	public function getCarFilters()
-	{
-		return [
-			new \App\Http\Filters\ModelFilter,
-			new \App\Http\Filters\TypeFilter,
-			new \App\Http\Filters\PriceFromFilter,
-			new \App\Http\Filters\PriceToFilter,
-			new \App\Http\Filters\YearFromFilter,
-			new \App\Http\Filters\YearToFilter,
-			new \App\Http\Filters\IsWorkingFilter,
-			new \App\Http\Filters\IsActiveFilter,
-			new \App\Http\Filters\DriveUnitFilter,
-			new \App\Http\Filters\WheelPositionFilter,
-			new \App\Http\Filters\MileageFromFilter,
-			new \App\Http\Filters\MileageToFilter,
-			new \App\Http\Filters\EngineCapacityFilter,
-			new \App\Http\Filters\BodyFilter,
-			new \App\Http\Filters\EngineFilter,
-			new \App\Http\Filters\GearBoxFilter,
-			new \App\Http\Filters\ColorFIlter,
-			new \App\Http\Filters\ColorMetalicFilter,
-			new \App\Http\Filters\CountryFilter,
-			new \App\Http\Filters\BrandFilter,
-		];
 	}
 }
