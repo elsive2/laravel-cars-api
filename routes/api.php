@@ -30,8 +30,7 @@ Route::prefix('v1')->name('v1.')->group(function () {
 
 		Route::get('my_cars', [CarController::class, 'getMyCars']);
 
-		Route::apiResource('cars', CarController::class)
-			->only(['store', 'update', 'delete']);
+		Route::apiResource('cars', CarController::class);
 
 		Route::apiResource('bodies', BodyController::class);
 		Route::apiResource('engines', EngineController::class);
@@ -42,10 +41,9 @@ Route::prefix('v1')->name('v1.')->group(function () {
 
 		Route::apiResource('images', ImageController::class)
 			->except('update');
-	});
 
-	Route::apiResource('cars', CarController::class)
-		->only(['index', 'show']);
+		Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+	});
 
 	Route::post('register', [AuthController::class, 'register'])->name('register');
 	Route::post('login', [AuthController::class, 'login'])->name('login');

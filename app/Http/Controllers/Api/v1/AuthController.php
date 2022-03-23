@@ -22,4 +22,9 @@ class AuthController extends Controller
 	{
 		return $this->reusltToken($this->authService->login($request->safe()));
 	}
+
+	public function logout()
+	{
+		return $this->result($this->authService->logout());
+	}
 }

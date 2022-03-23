@@ -41,4 +41,14 @@ class AuthService extends BaseService
 		}
 		return $this->errValidate('Wrong email or password!');
 	}
+
+	public function logout()
+	{
+		$isDeleted = request()->user()->currentAccessToken()->delete();
+
+		if ($isDeleted) {
+			return $this->successMessage('You have been logged out!');
+		}
+		return $this->errService();
+	}
 }
