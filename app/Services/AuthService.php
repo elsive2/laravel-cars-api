@@ -7,11 +7,23 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService extends BaseService
 {
+	/**
+	 * __construct
+	 *
+	 * @param UserRepository $userRepository
+	 * @return void
+	 */
 	public function __construct(
 		private UserRepository $userRepository
 	) {
 	}
 
+	/**
+	 * Register a new user
+	 *
+	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @return ResultService
+	 */
 	public function register($data)
 	{
 		$user = $this->userRepository->create($data->toArray());
@@ -25,6 +37,12 @@ class AuthService extends BaseService
 		return $this->successMessage('User has been registered!');
 	}
 
+	/**
+	 * Login the user
+	 *
+	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @return ResultService
+	 */
 	public function login($data)
 	{
 		$user = $this->userRepository->getByEmail($data->email);
@@ -42,6 +60,11 @@ class AuthService extends BaseService
 		return $this->errValidate('Wrong email or password!');
 	}
 
+	/**
+	 * Logout the user
+	 *
+	 * @return ResultService
+	 */
 	public function logout()
 	{
 		$isDeleted = request()->user()->currentAccessToken()->delete();
