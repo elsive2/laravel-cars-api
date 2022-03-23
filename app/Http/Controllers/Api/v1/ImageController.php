@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Api\v1\Controller;
 use App\Http\Requests\ImageRequest;
 use App\Http\Resources\v1\ImageResource;
 use App\Services\ImageService;
