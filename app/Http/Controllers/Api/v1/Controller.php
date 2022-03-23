@@ -46,4 +46,21 @@ class Controller extends BaseController
 		}
 		return $this->result($result);
 	}
+
+	/**
+	 * reusltToken
+	 *
+	 * @param  ResultSerivce $result
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	protected function reusltToken($result)
+	{
+		if ($result->isSuccess()) {
+			return response()->json([
+				'access_token' => $result->data,
+				'token_type' => 'bearer',
+			]);
+		}
+		return $this->result($result);
+	}
 }

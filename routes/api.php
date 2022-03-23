@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\v1\{
 
 Route::prefix('v1')->name('v1.')->group(function () {
 	Route::post('register', [AuthController::class, 'register'])->name('register');
+	Route::post('login', [AuthController::class, 'login'])->name('login');
 
 	Route::apiResource('bodies', BodyController::class);
 	Route::apiResource('engines', EngineController::class);
@@ -36,6 +37,4 @@ Route::prefix('v1')->name('v1.')->group(function () {
 
 	Route::apiResource('images', ImageController::class)
 		->except('update');
-
-	Route::apiResource('cars', CarController::class);
 });
