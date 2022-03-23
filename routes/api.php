@@ -25,16 +25,28 @@ use App\Http\Controllers\Api\v1\{
 */
 
 Route::prefix('v1')->name('v1.')->group(function () {
+
+	Route::middleware('auth:sanctum')->group(function () {
+
+		Route::get('my_cars', [CarController::class, 'getMyCars']);
+
+		Route::apiResource('cars', CarController::class)
+			->only(['store', 'update', 'delete']);
+
+		Route::apiResource('bodies', BodyController::class);
+		Route::apiResource('engines', EngineController::class);
+		Route::apiResource('gear_boxes', GearBoxController::class);
+		Route::apiResource('colors', ColorController::class);
+		Route::apiResource('countries', CountryController::class);
+		Route::apiResource('brands', BrandController::class);
+
+		Route::apiResource('images', ImageController::class)
+			->except('update');
+	});
+
+	Route::apiResource('cars', CarController::class)
+		->only(['index', 'show']);
+
 	Route::post('register', [AuthController::class, 'register'])->name('register');
 	Route::post('login', [AuthController::class, 'login'])->name('login');
-
-	Route::apiResource('bodies', BodyController::class);
-	Route::apiResource('engines', EngineController::class);
-	Route::apiResource('gear_boxes', GearBoxController::class);
-	Route::apiResource('colors', ColorController::class);
-	Route::apiResource('countries', CountryController::class);
-	Route::apiResource('brands', BrandController::class);
-
-	Route::apiResource('images', ImageController::class)
-		->except('update');
 });

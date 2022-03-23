@@ -36,13 +36,8 @@ class AuthService extends BaseService
 			return $this->errValidate('The element isn\'t a user model');
 		}
 
-		if ($user && Hash::check($data->password, $user->password)) {
-			if ($user->is_admin) {
-				$token = $user->createToken('myAppToken', ['admin:everything']);
-			} else {
-				$token = $user->createToken('MyAppToken');
-			}
-			return $this->successData($token->plainTextToken);
+		if (Hash::check($data->password, $user->password)) {
+			return $this->successData($user->createToken('myAppToken')->plainTextToken);
 		}
 		return $this->errValidate('Wrong email or password!');
 	}
