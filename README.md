@@ -15,6 +15,8 @@ To begin with, I want to say that this API is more of a portfolio project, a dem
 
 I was inspired by one site for the sale of cars. There were cars on that site, not weird, where you can sort the cars however you want and also list your own cars for sale. That is, choose the brand, year of publication, price from and to, and so on. In general, I decided to implement this API on the Laravel framework.
 
+In addition, i'd like to say that it's my first time when i use phpunit tests
+
 ## screenshots
 
 ![404](/public/readme/1.png)
