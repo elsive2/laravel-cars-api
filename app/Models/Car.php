@@ -25,7 +25,8 @@ class Car extends Model
 		'is_working',
 		'option_id',
 		'country_id',
-		'brand_id'
+		'brand_id',
+		'user_id'
 	];
 
 	/**

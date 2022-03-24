@@ -85,6 +85,7 @@ class CarService extends BaseService
 
 		$carData = $data->getCarData();
 		$carData['option_id'] = $option->id;
+		$carData['user_id'] = auth()->user()->id;
 
 		$car = $this->carRepository->create($carData);
 
