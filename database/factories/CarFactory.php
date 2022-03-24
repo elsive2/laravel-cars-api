@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Helpers\CarsConstant;
 use App\Models\Country;
 use App\Models\Option;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -30,6 +31,7 @@ class CarFactory extends Factory
 			'option_id' => Option::factory(),
 			'country_id' => Country::factory(),
 			'brand_id' => random_int(1, 3),
+			'user_id' => User::factory(),
 		];
 	}
 }

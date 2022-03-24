@@ -149,4 +149,25 @@ class CarService extends BaseService
 
 		return $this->successMessage('Car has been deleted!');
 	}
+
+	/**
+	 * Get the users which own to the user
+	 *
+	 * @param  \App\Models\User $user
+	 * @return ResultService
+	 */
+	public function getUsersCars($user)
+	{
+		if (is_null($user)) {
+			return $this->errNotFound('User hasn\'t been found!');
+		}
+		if (!($user instanceof \App\Models\User)) {
+			return $this->errValidate('The element isn\'t a user model!');
+		}
+
+		if ($cars = $this->carRepository->getUsersCars($user)) {
+			return $this->successData($cars);
+		}
+		return $this->errService();
+	}
 }

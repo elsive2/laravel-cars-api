@@ -59,6 +59,16 @@ class Car extends Model
 	}
 
 	/**
+	 * Get the user which owns to the car
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
+
+	/**
 	 * Get the images which own to the car
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany

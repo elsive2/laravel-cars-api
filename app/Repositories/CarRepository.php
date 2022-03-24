@@ -61,4 +61,16 @@ class CarRepository
 	{
 		return $car->delete();
 	}
+
+	/**
+	 * Get the users which own to the user
+	 * 
+	 * @param  \App\Models\User $user
+	 * @return \Illuminate\Database\Eloquent\Collection
+	 */
+	public function getUsersCars($user)
+	{
+
+		return $user->cars;
+	}
 }

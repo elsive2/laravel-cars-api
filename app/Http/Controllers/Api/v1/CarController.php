@@ -80,4 +80,14 @@ class CarController extends Controller
 	{
 		return $this->result($this->carService->delete($id));
 	}
+
+	/**
+	 * Get all the user's cars
+	 *
+	 * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+	 */
+	public function getUsersCars()
+	{
+		return $this->resultCollection($this->carService->getUsersCars(auth()->user()), CarResource::class);
+	}
 }

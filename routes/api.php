@@ -28,7 +28,7 @@ Route::prefix('v1')->name('v1.')->group(function () {
 
 	Route::middleware('auth:sanctum')->group(function () {
 
-		Route::get('my_cars', [CarController::class, 'getMyCars']);
+		Route::get('my_cars', [CarController::class, 'getUsersCars']);
 
 		Route::apiResource('cars', CarController::class);
 

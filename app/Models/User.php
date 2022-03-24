@@ -44,6 +44,16 @@ class User extends Authenticatable
 	];
 
 	/**
+	 * Get the cars which owns to the user
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function cars()
+	{
+		return $this->hasMany(Car::class);
+	}
+
+	/**
 	 * Set the user's password
 	 *
 	 * @param string
