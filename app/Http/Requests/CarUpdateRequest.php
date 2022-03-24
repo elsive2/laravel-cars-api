@@ -36,10 +36,10 @@ class CarUpdateRequest extends FormRequest
 			'wheel_position'	=> ['nullable', Rule::in(CarsConstant::WHEEL_POSITION)],
 			'engine_capacity' 	=> ['nullable', 'integer', 'between:1,50'],
 			'country_id' 		=> ['nullable', 'exists:countries,id'],
-			'brand_id' 			=> ['nullable', 'string', 'exists:brands,id'],
-			'body_id' 			=> ['nullable', 'string', 'exists:bodies,id'],
-			'engine_id' 		=> ['nullable', 'string', 'exists:engines,id'],
-			'gear_box_id'		=> ['nullable', 'string', 'exists:gear_boxes,id'],
+			'brand_id' 			=> ['nullable', 'exists:brands,id'],
+			'body_id' 			=> ['nullable', 'exists:bodies,id'],
+			'engine_id' 		=> ['nullable', 'exists:engines,id'],
+			'gear_box_id'		=> ['nullable', 'exists:gear_boxes,id'],
 			'color_id' 			=> ['nullable', 'exists:colors,id'],
 		];
 	}

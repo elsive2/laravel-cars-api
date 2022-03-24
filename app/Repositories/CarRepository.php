@@ -70,7 +70,6 @@ class CarRepository
 	 */
 	public function getUsersCars($user)
 	{
-
 		return $user->cars;
 	}
 }
