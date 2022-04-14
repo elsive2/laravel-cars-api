@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\ImageObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,5 +28,17 @@ class Image extends Model
 	public function car()
 	{
 		return $this->belongsTo(Car::class);
+	}
+
+	/**
+	 * method "boot"
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		Image::observe(ImageObserver::class);
 	}
 }

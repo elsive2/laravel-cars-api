@@ -41,6 +41,7 @@ class CarUpdateRequest extends FormRequest
 			'engine_id' 		=> ['nullable', 'exists:engines,id'],
 			'gear_box_id'		=> ['nullable', 'exists:gear_boxes,id'],
 			'color_id' 			=> ['nullable', 'exists:colors,id'],
+			'images_id'			=> ['nullable', 'array']
 		];
 	}
 
@@ -51,8 +52,15 @@ class CarUpdateRequest extends FormRequest
 	 */
 	protected function prepareForValidation()
 	{
-		$this->merge([
-			'is_working' => $this->boolean('is_working'),
-		]);
+		$merge = [];
+
+		if (isset($this->is_working)) {
+			$merge['is_working'] = $this->boolean('is_working');
+		}
+		if (isset($this->images_id)) {
+			$merge['images_id'] = explode(',', $this->images_id);
+		}
+
+		$this->merge($merge);
 	}
 }

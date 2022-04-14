@@ -60,4 +60,15 @@ class imageRepository
 	{
 		return $image->delete();
 	}
+
+	/**
+	 * Delete all the images from the model
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Model $model
+	 * @return bool|null
+	 */
+	public function deleteAllFrom($model)
+	{
+		return $model->images()->delete();
+	}
 }

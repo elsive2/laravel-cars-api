@@ -116,11 +116,21 @@ class ImageService extends BaseService
 		if (!$image->isSuccess()) {
 			return $image;
 		}
-
-		Storage::delete($image->data->name);
-
 		$this->imageRepository->delete($image->data);
 
 		return $this->successMessage('Image has been deleted!');
+	}
+
+	/**
+	 * Delete all the images from the model
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Model $model
+	 * @return ResultService
+	 */
+	public function deleteAllFrom($model)
+	{
+		$this->imageRepository->deleteAllFrom($model);
+
+		return $this->successMessage('Images have been deleted!');
 	}
 }

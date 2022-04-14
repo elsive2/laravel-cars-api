@@ -118,6 +118,19 @@ class CarService extends BaseService
 		if (!$car->isSuccess()) {
 			return $car;
 		}
+		if (!empty($images = $data->data->images_id)) {
+			$deletedResult = $this->imageService->deleteAllFrom($car->data);
+
+			if (!$deletedResult->isSuccess()) {
+				return $deletedResult;
+			}
+
+			$savedResult = $this->imageService->addImagesToModel($car->data, $images);
+
+			if (!$savedResult->isSuccess()) {
+				return $savedResult;
+			}
+		}
 
 		if ($data->optionDataHas()) {
 			if (!$this->optionRepository->updateCarOptions($car->data, $data->getOptionsData())) {
