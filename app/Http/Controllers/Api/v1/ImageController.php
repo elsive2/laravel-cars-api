@@ -48,7 +48,7 @@ class ImageController extends Controller
 	 */
 	public function store(ImageRequest $request)
 	{
-		return $this->result($this->imageService->create($request->file('image')));
+		return $this->resultResource($this->imageService->create($request->file('image')), ImageResource::class);
 	}
 
 	/**

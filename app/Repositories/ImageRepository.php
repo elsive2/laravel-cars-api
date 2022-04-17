@@ -43,7 +43,7 @@ class imageRepository
 	 * Create an image
 	 *
 	 * @param  string $path
-	 * @return void
+	 * @return Image
 	 */
 	public function create(string $path)
 	{

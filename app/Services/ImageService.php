@@ -100,7 +100,7 @@ class ImageService extends BaseService
 		if (!$this->imageRepository->create($image)) {
 			return $this->errService();
 		}
-		return $this->successMessage('Image has been created!');
+		return $this->successData($image);
 	}
 
 	/**
