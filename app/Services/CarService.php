@@ -90,7 +90,8 @@ class CarService extends BaseService
 		$car = $this->carRepository->create($carData);
 
 		// interacting with images
-		if (!empty($images = $data->data->images_id)) {
+		if (isset($data->data->images_id)) {
+			$images = $data->data->images_id;
 			$savingResult = $this->imageService->addImagesToModel($car, $images);
 
 			if (!$savingResult->isSuccess()) {
@@ -118,7 +119,8 @@ class CarService extends BaseService
 		if (!$car->isSuccess()) {
 			return $car;
 		}
-		if (!empty($images = $data->data->images_id)) {
+		if (isset($data->data->images_id)) {
+			$images = $data->data->images_id;
 			$deletedResult = $this->imageService->deleteAllFrom($car->data);
 
 			if (!$deletedResult->isSuccess()) {
