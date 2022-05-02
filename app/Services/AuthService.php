@@ -55,7 +55,9 @@ class AuthService extends BaseService
 		}
 
 		if (Hash::check($data->password, $user->password)) {
-			return $this->successData($user->createToken('myAppToken')->plainTextToken);
+			$token = $user->createToken('myAppToken', [$user->is_admin ? 'admin' : 'guest']);
+
+			return $this->successData($token->plainTextToken);
 		}
 		return $this->errValidate('Wrong email or password!');
 	}
