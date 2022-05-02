@@ -28,23 +28,45 @@ Route::prefix('v1')->group(function () {
 
 	Route::middleware('auth:sanctum')->group(function () {
 
+		// available only for admins
+		Route::middleware('abilities:admin')->group(function () {
+			Route::apiResource('bodies', BodyController::class)
+				->only('store', 'update', 'delete');
+			Route::apiResource('engines', EngineController::class)
+				->only('store', 'update', 'delete');
+			Route::apiResource('gear_boxes', GearBoxController::class)
+				->only('store', 'update', 'delete');
+			Route::apiResource('colors', ColorController::class)
+				->only('store', 'update', 'delete');
+			Route::apiResource('countries', CountryController::class)
+				->only('store', 'update', 'delete');
+			Route::apiResource('brands', BrandController::class)
+				->only('store', 'update', 'delete');
+		});
+
 		Route::get('my_cars', [CarController::class, 'getUsersCars']);
 
 		Route::apiResource('cars', CarController::class)
-			->except('index', 'show');
-
-		Route::apiResource('bodies', BodyController::class);
-		Route::apiResource('engines', EngineController::class);
-		Route::apiResource('gear_boxes', GearBoxController::class);
-		Route::apiResource('colors', ColorController::class);
-		Route::apiResource('countries', CountryController::class);
-		Route::apiResource('brands', BrandController::class);
+			->only('store', 'update', 'delete');
 
 		Route::apiResource('images', ImageController::class)
 			->except('update');
 
 		Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 	});
+
+	Route::apiResource('bodies', BodyController::class)
+		->only('index', 'show');
+	Route::apiResource('engines', EngineController::class)
+		->only('index', 'show');
+	Route::apiResource('gear_boxes', GearBoxController::class)
+		->only('index', 'show');
+	Route::apiResource('colors', ColorController::class)
+		->only('index', 'show');
+	Route::apiResource('countries', CountryController::class)
+		->only('index', 'show');
+	Route::apiResource('brands', BrandController::class)
+		->only('index', 'show');
 
 	Route::apiResource('cars', CarController::class)
 		->only('index', 'show');
