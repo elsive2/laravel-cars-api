@@ -47,7 +47,7 @@ class BodyService extends BaseService
 		}
 
 		if (!($body instanceof \App\Models\Body)) {
-			return $this->errValidate('The element isn\'t a body model!');
+			return $this->errValidate(__('api.body.not_body_model'));
 		}
 		return $this->successData($body);
 	}
@@ -63,13 +63,13 @@ class BodyService extends BaseService
 		$body = $this->bodyRepository->create($data->toArray());
 
 		if (!($body instanceof \App\Models\Body)) {
-			return $this->errValidate('The element isn\'t a body model!');
+			return $this->errValidate(__('api.body.not_body_model'));
 		}
 
 		if (!$body) {
 			return $this->errService();
 		}
-		return $this->successMessage('Body has been created!');
+		return $this->successMessage(__('api.body.created'));
 	}
 
 	/**
@@ -92,7 +92,7 @@ class BodyService extends BaseService
 		if (!$isUpdated) {
 			return $this->errService();
 		}
-		return $this->successMessage('Body has been updated!');
+		return $this->successMessage(__('api.body.updated'));
 	}
 
 	/**
@@ -111,6 +111,6 @@ class BodyService extends BaseService
 
 		$this->bodyRepository->delete($brand->data);
 
-		return $this->successMessage('Body has been deleted!');
+		return $this->successMessage(__('api.body.deleted'));
 	}
 }

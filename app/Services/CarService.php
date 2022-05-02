@@ -58,10 +58,10 @@ class CarService extends BaseService
 		$car = $this->carRepository->getById($id);
 
 		if (is_null($car)) {
-			return $this->errNotFound('Car hasn\'t been found!');
+			return $this->errNotFound(__('api.car.not_found'));
 		}
 		if (!($car instanceof \App\Models\Car)) {
-			return $this->errValidate('The element isn\'t a car model');
+			return $this->errValidate(__('api.car.not_car_model'));
 		}
 		return $this->successData($car);
 	}
@@ -77,10 +77,10 @@ class CarService extends BaseService
 		$option = $this->optionRepository->create($data->getOptionsData());
 
 		if (is_null($option)) {
-			return $this->errNotFound('Options hasn\'t been found!');
+			return $this->errNotFound(__('api.options.not_found'));
 		}
 		if (!($option instanceof \App\Models\Option)) {
-			return $this->errValidate('The element isn\'t a option model!');
+			return $this->errValidate(__('api.options.not_option_model'));
 		}
 
 		$carData = $data->getCarData();
@@ -102,7 +102,7 @@ class CarService extends BaseService
 		if (!$car) {
 			return $this->errService();
 		}
-		return $this->successMessage('Success! Your car will be published after moderation!');
+		return $this->successMessage(__('api.car.success'));
 	}
 
 	/**
@@ -144,7 +144,7 @@ class CarService extends BaseService
 				return $this->errService();
 			}
 		}
-		return $this->successMessage('Car has been updated!');
+		return $this->successMessage(__('api.car.updated'));
 	}
 
 	/**
@@ -163,7 +163,7 @@ class CarService extends BaseService
 
 		$this->carRepository->delete($car->data);
 
-		return $this->successMessage('Car has been deleted!');
+		return $this->successMessage(__('api.car.deleted'));
 	}
 
 	/**
@@ -175,10 +175,10 @@ class CarService extends BaseService
 	public function getUsersCars($user)
 	{
 		if (is_null($user)) {
-			return $this->errNotFound('User hasn\'t been found!');
+			return $this->errNotFound(__('api.auth.user_not_found'));
 		}
 		if (!($user instanceof \App\Models\User)) {
-			return $this->errValidate('The element isn\'t a user model!');
+			return $this->errValidate(__('api.auth.not_user_model'));
 		}
 
 		if ($cars = $this->carRepository->getUsersCars($user)) {

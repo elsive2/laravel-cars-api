@@ -44,11 +44,11 @@ class ImageService extends BaseService
 		$image = $this->imageRepository->getById($id);
 
 		if (is_null($image)) {
-			return $this->errNotFound('Image hasn\'t been found!');
+			return $this->errNotFound(__('api.image.not_found'));
 		}
 
 		if (!($image instanceof \App\Models\Image)) {
-			return $this->errValidate('The element isn\'t an image model!');
+			return $this->errValidate(__('api.image.not_image_model'));
 		}
 		return $this->successData($image);
 	}
@@ -71,7 +71,7 @@ class ImageService extends BaseService
 				return $image;
 			}
 			if ($image->data->car) {
-				return $this->errValidate("Image number $id is already in use");
+				return $this->errValidate(__('api.image.used', ['id' => $id]));
 			}
 
 			$images[] = $image->data;
@@ -80,7 +80,7 @@ class ImageService extends BaseService
 		if (!$this->imageRepository->saveImagesToModel($model, $images)) {
 			return $this->errService();
 		}
-		return $this->successMessage('Images have been saved!');
+		return $this->successMessage(__('api.image.saved'));
 	}
 
 	/**
@@ -94,7 +94,7 @@ class ImageService extends BaseService
 		$image = $file->storePublicly('images');
 
 		if (!$image) {
-			return $this->errValidate('Image hasn\'t been loaded!');
+			return $this->errValidate(__('api.image.loaded'));
 		}
 		if (!($model = $this->imageRepository->create($image))) {
 			return $this->errService();
@@ -117,7 +117,7 @@ class ImageService extends BaseService
 		}
 		$this->imageRepository->delete($image->data);
 
-		return $this->successMessage('Image has been deleted!');
+		return $this->successMessage(__('api.image.deleted'));
 	}
 
 	/**
@@ -130,6 +130,6 @@ class ImageService extends BaseService
 	{
 		$this->imageRepository->deleteAllFrom($model);
 
-		return $this->successMessage('Images have been deleted!');
+		return $this->successMessage(__('api.image.deleted_plural'));
 	}
 }

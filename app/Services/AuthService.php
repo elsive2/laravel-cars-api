@@ -29,12 +29,12 @@ class AuthService extends BaseService
 		$user = $this->userRepository->create($data->toArray());
 
 		if (is_null($user)) {
-			return $this->errNotFound('User hasn\'t been found!');
+			return $this->errNotFound(__('api.auth.user_not_found'));
 		}
 		if (!($user instanceof \App\Models\User)) {
-			return $this->errValidate('The element isn\'t a user model!');
+			return $this->errValidate(__('api.auth.not_user_model'));
 		}
-		return $this->successMessage('User has been registered!');
+		return $this->successMessage(__('api.auth.registered'));
 	}
 
 	/**
@@ -48,10 +48,10 @@ class AuthService extends BaseService
 		$user = $this->userRepository->getByEmail($data->email);
 
 		if (is_null($user)) {
-			return $this->errValidate('Wrong email or password!');
+			return $this->errValidate(__('api.auth.wrong'));
 		}
 		if (!($user instanceof \App\Models\User)) {
-			return $this->errValidate('The element isn\'t a user model');
+			return $this->errValidate(__('api.auth.not_user_model'));
 		}
 
 		if (Hash::check($data->password, $user->password)) {
@@ -59,7 +59,7 @@ class AuthService extends BaseService
 
 			return $this->successData($token->plainTextToken);
 		}
-		return $this->errValidate('Wrong email or password!');
+		return $this->errValidate(__('api.auth.wrong'));
 	}
 
 	/**
@@ -72,7 +72,7 @@ class AuthService extends BaseService
 		$isDeleted = request()->user()->currentAccessToken()->delete();
 
 		if ($isDeleted) {
-			return $this->successMessage('You have been logged out!');
+			return $this->successMessage(__('api.auth.logged_out'));
 		}
 		return $this->errService();
 	}

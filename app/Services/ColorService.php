@@ -47,7 +47,7 @@ class ColorService extends BaseService
 		}
 
 		if (!($color instanceof \App\Models\Color)) {
-			return $this->errValidate('The element isn\'t a color model!');
+			return $this->errValidate(__('api.color.not_color_model'));
 		}
 		return $this->successData($color);
 	}
@@ -63,13 +63,13 @@ class ColorService extends BaseService
 		$color = $this->colorRepository->create($data->toArray());
 
 		if (!($color instanceof \App\Models\Color)) {
-			return $this->errValidate('The element isn\'t a color model!');
+			return $this->errValidate(__('api.color.not_color_model'));
 		}
 
 		if (!$color) {
 			return $this->errService();
 		}
-		return $this->successMessage('Color has been created!');
+		return $this->successMessage(__('api.color.created'));
 	}
 
 	/**
@@ -92,7 +92,7 @@ class ColorService extends BaseService
 		if (!$isUpdated) {
 			return $this->errService();
 		}
-		return $this->successMessage('Color has been updated!');
+		return $this->successMessage(__('api.color.updated'));
 	}
 
 	/**
@@ -111,6 +111,6 @@ class ColorService extends BaseService
 
 		$this->colorRepository->delete($color->data);
 
-		return $this->successMessage('Color has been deleted!');
+		return $this->successMessage(__('api.color.deleted'));
 	}
 }

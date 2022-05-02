@@ -75,7 +75,7 @@ return [
 	'image' => [
 		'not_found' => 'Image hasn\'t been found!',
 		'not_image_model' => 'The element isn\'t an image model!',
-		'used' => "Image number $id is already in use",
+		'used' => "Image number :id is already in use",
 		'saved' => 'Images have been saved!',
 		'loaded' => 'Image hasn\'t been loaded!',
 		'deleted' => 'Image has been deleted!',

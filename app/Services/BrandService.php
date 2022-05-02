@@ -47,7 +47,7 @@ class BrandService extends BaseService
 		}
 
 		if (!($brand instanceof \App\Models\Brand)) {
-			return $this->errValidate('The element isn\'t a brand model!');
+			return $this->errValidate(__('api.brand.not_brand_model'));
 		}
 		return $this->successData($brand);
 	}
@@ -63,13 +63,13 @@ class BrandService extends BaseService
 		$brand = $this->brandRepository->create($data->toArray());
 
 		if (!($brand instanceof \App\Models\Brand)) {
-			return $this->errValidate('The element isn\'t a brand model!');
+			return $this->errValidate(__('api.brand.not_brand_model'));
 		}
 
 		if (!$brand) {
 			return $this->errService();
 		}
-		return $this->successMessage('Brand has been created!');
+		return $this->successMessage(__('api.brand.created'));
 	}
 
 	/**
@@ -92,7 +92,7 @@ class BrandService extends BaseService
 		if (!$isUpdated) {
 			return $this->errService();
 		}
-		return $this->successMessage('Brand has been updated!');
+		return $this->successMessage(__('api.brand.updated'));
 	}
 
 	/**
@@ -111,6 +111,6 @@ class BrandService extends BaseService
 
 		$this->brandRepository->delete($brand->data);
 
-		return $this->successMessage('Brand has been deleted!');
+		return $this->successMessage(__('api.brand.deleted'));
 	}
 }

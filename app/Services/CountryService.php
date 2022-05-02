@@ -47,7 +47,7 @@ class CountryService extends BaseService
 		}
 
 		if (!($country instanceof \App\Models\Country)) {
-			return $this->errValidate('The element isn\'t a country model!');
+			return $this->errValidate(__('api.country.not_country_model'));
 		}
 		return $this->successData($country);
 	}
@@ -63,13 +63,13 @@ class CountryService extends BaseService
 		$country = $this->countryRepository->create($data->toArray());
 
 		if (!($country instanceof \App\Models\Country)) {
-			return $this->errValidate('The element isn\'t a country model!');
+			return $this->errValidate(__('api.country.not_country_model'));
 		}
 
 		if (!$country) {
 			return $this->errService();
 		}
-		return $this->successMessage('Country has been created!');
+		return $this->successMessage(__('api.country.created'));
 	}
 
 	/**
@@ -92,7 +92,7 @@ class CountryService extends BaseService
 		if (!$isUpdated) {
 			return $this->errService();
 		}
-		return $this->successMessage('Country has been updated!');
+		return $this->successMessage(__('api.country.updated'));
 	}
 
 	/**
@@ -111,6 +111,6 @@ class CountryService extends BaseService
 
 		$this->countryRepository->delete($country->data);
 
-		return $this->successMessage('Country has been deleted!');
+		return $this->successMessage(__('api.country.deleted'));
 	}
 }

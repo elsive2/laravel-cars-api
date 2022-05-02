@@ -47,7 +47,7 @@ class EngineService extends BaseService
 		}
 
 		if (!($engine instanceof \App\Models\Engine)) {
-			return $this->errValidate('The element isn\'t a engine model!');
+			return $this->errValidate(__('api.engine.not_engine_model'));
 		}
 		return $this->successData($engine);
 	}
@@ -63,13 +63,13 @@ class EngineService extends BaseService
 		$engine = $this->engineRepository->create($data->toArray());
 
 		if (!($engine instanceof \App\Models\Engine)) {
-			return $this->errValidate('The element isn\'t a engine model!');
+			return $this->errValidate(__('api.engine.not_engine_model'));
 		}
 
 		if (!$engine) {
 			return $this->errService();
 		}
-		return $this->successMessage('Engine has been created!');
+		return $this->successMessage(__('api.engine.created'));
 	}
 
 	/**
@@ -92,7 +92,7 @@ class EngineService extends BaseService
 		if (!$isUpdated) {
 			return $this->errService();
 		}
-		return $this->successMessage('Engine has been updated!');
+		return $this->successMessage(__('api.engine.updated'));
 	}
 
 	/**
@@ -111,6 +111,6 @@ class EngineService extends BaseService
 
 		$this->engineRepository->delete($engine->data);
 
-		return $this->successMessage('Engine has been deleted!');
+		return $this->successMessage(__('api.engine.deleted'));
 	}
 }

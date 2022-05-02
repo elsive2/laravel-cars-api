@@ -47,7 +47,7 @@ class GearBoxService extends BaseService
 		}
 
 		if (!($gearBox instanceof \App\Models\GearBox)) {
-			return $this->errValidate('The element isn\'t a gear box model!');
+			return $this->errValidate(__('api.gear_box.not_gear_box_model'));
 		}
 		return $this->successData($gearBox);
 	}
@@ -63,13 +63,13 @@ class GearBoxService extends BaseService
 		$gearBox = $this->gearBoxRepository->create($data->toArray());
 
 		if (!($gearBox instanceof \App\Models\GearBox)) {
-			return $this->errValidate('The element isn\'t a gear box model!');
+			return $this->errValidate(__('api.gear_box.not_gear_box_model'));
 		}
 
 		if (!$gearBox) {
 			return $this->errService();
 		}
-		return $this->successMessage('Gear box has been created!');
+		return $this->successMessage(__('api.gear_box.created'));
 	}
 
 	/**
@@ -92,7 +92,7 @@ class GearBoxService extends BaseService
 		if (!$isUpdated) {
 			return $this->errService();
 		}
-		return $this->successMessage('Gear box has been updated!');
+		return $this->successMessage(__('api.gear_box.updated'));
 	}
 
 	/**
@@ -111,6 +111,6 @@ class GearBoxService extends BaseService
 
 		$this->gearBoxRepository->delete($gearBox->data);
 
-		return $this->successMessage('Gear box has been deleted!');
+		return $this->successMessage(__('api.gear_box.deleted'));
 	}
 }
