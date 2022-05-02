@@ -96,11 +96,10 @@ class ImageService extends BaseService
 		if (!$image) {
 			return $this->errValidate('Image hasn\'t been loaded!');
 		}
-
-		if (!$this->imageRepository->create($image)) {
+		if (!($model = $this->imageRepository->create($image))) {
 			return $this->errService();
 		}
-		return $this->successData($image);
+		return $this->successData($model);
 	}
 
 	/**

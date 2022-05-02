@@ -32,8 +32,9 @@ class CarResource extends JsonResource
 			'body' => $this->options->body->name,
 			'engine' => $this->options->engine->name,
 			'gear_box' => $this->options->gearBox->name,
-			'color' => new ColorResource($this->options->color),
 			'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
+			'color' => new ColorResource($this->options->color),
+			'owner' => new OwnerResource($this->user),
 			'images' => ImageResource::collection($this->images)
 		];
 	}
