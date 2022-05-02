@@ -24,10 +24,6 @@ return [
 		'not_found' => 'Not found!',
 		'validate' => 'Validate error has occured!',
 		'sent' => 'Data has been sent successfully!',
-
-		'message' => 'message',
-		'data' => 'data',
-		'code' => 'code',
 	],
 
 	'body' => [

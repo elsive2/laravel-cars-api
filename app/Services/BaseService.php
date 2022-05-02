@@ -70,8 +70,8 @@ abstract class BaseService
 		Log::info(__('api.base.sent'));
 
 		return new ResultService([
-			__('api.base.data') => $data,
-			__('api.base.code') => 200,
+			'data' => $data,
+			'code' => 200,
 		]);
 	}
 
@@ -83,8 +83,10 @@ abstract class BaseService
 	private function message(int $code, string $message)
 	{
 		return new ResultService([
-			__('api.base.data') => [__('api.base.message') => $message],
-			__('api.base.code') => $code
+			'data' => [
+				'message' => $message
+			],
+			'code' => $code
 		]);
 	}
 }
