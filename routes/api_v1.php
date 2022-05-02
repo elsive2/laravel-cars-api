@@ -10,7 +10,8 @@ use App\Http\Controllers\Api\v1\{
 	CountryController,
 	EngineController,
 	GearBoxController,
-	ImageController
+	ImageController,
+	LanguageController
 };
 
 /*
@@ -72,3 +73,5 @@ Route::apiResource('cars', CarController::class)
 
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
+
+Route::get('lang/{lang}', LanguageController::class)->name('lang.switch');
