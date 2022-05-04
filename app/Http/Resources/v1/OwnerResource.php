@@ -18,8 +18,8 @@ class OwnerResource extends JsonResource
 			'id' => $this->id,
 			'name' => $this->name,
 			'email' => $this->email,
-			'is_admin' => (bool)$this->is_admin,
-			'is_banned' => (bool)$this->locked,
+			'isAdmin' => (bool)$this->is_admin,
+			'isBanned' => (bool)$this->locked,
 		];
 	}
 }
