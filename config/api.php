@@ -9,9 +9,7 @@ return [
 	| This value stores the default sort values for all machines.
     |
     */
-	'cars' => [
-		'order' 	=> 'asc',
-		'sort' 		=> 'id',
-		'per_page' 	=> 10
-	]
+	'order' 	=> 'asc',
+	'sort' 		=> 'id',
+	'per_page' 	=> 10
 ];

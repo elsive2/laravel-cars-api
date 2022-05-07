@@ -2,82 +2,37 @@
 
 namespace App\Services;
 
-class CarFilterService
+class CarFilterService extends FilterService
 {
 	/**
 	 * Get all the car filters
 	 *
 	 * @return array<\App\Http\Filters\QueryFilter>
 	 */
-	private static function getCarFilters()
+	public static function filters()
 	{
 		return [
-			new \App\Http\Filters\ModelFilter,
-			new \App\Http\Filters\TypeFilter,
-			new \App\Http\Filters\PriceFromFilter,
-			new \App\Http\Filters\PriceToFilter,
-			new \App\Http\Filters\YearFromFilter,
-			new \App\Http\Filters\YearToFilter,
-			new \App\Http\Filters\IsWorkingFilter,
-			new \App\Http\Filters\IsActiveFilter,
-			new \App\Http\Filters\DriveUnitFilter,
-			new \App\Http\Filters\WheelPositionFilter,
-			new \App\Http\Filters\MileageFromFilter,
-			new \App\Http\Filters\MileageToFilter,
-			new \App\Http\Filters\EngineCapacityToFilter,
-			new \App\Http\Filters\EngineCapacityFromFilter,
-			new \App\Http\Filters\BodyFilter,
-			new \App\Http\Filters\EngineFilter,
-			new \App\Http\Filters\GearBoxFilter,
-			new \App\Http\Filters\ColorFIlter,
-			new \App\Http\Filters\ColorMetalicFilter,
-			new \App\Http\Filters\CountryFilter,
-			new \App\Http\Filters\BrandFilter,
+			\App\Http\Filters\ModelFilter::class,
+			\App\Http\Filters\TypeFilter::class,
+			\App\Http\Filters\PriceFromFilter::class,
+			\App\Http\Filters\PriceToFilter::class,
+			\App\Http\Filters\YearFromFilter::class,
+			\App\Http\Filters\YearToFilter::class,
+			\App\Http\Filters\IsWorkingFilter::class,
+			\App\Http\Filters\IsActiveFilter::class,
+			\App\Http\Filters\DriveUnitFilter::class,
+			\App\Http\Filters\WheelPositionFilter::class,
+			\App\Http\Filters\MileageFromFilter::class,
+			\App\Http\Filters\MileageToFilter::class,
+			\App\Http\Filters\EngineCapacityToFilter::class,
+			\App\Http\Filters\EngineCapacityFromFilter::class,
+			\App\Http\Filters\BodyFilter::class,
+			\App\Http\Filters\EngineFilter::class,
+			\App\Http\Filters\GearBoxFilter::class,
+			\App\Http\Filters\ColorFIlter::class,
+			\App\Http\Filters\ColorMetalicFilter::class,
+			\App\Http\Filters\CountryFilter::class,
+			\App\Http\Filters\BrandFilter::class,
 		];
-	}
-
-	/**
-	 * Method that starts filtering
-	 *
-	 * @param  \Illuminate\Database\Eloquent\Builder $builder
-	 * @param  array $data
-	 * @return \Illuminate\Pagination\LengthAwarePaginator
-	 */
-	public static function handle($builder, $data)
-	{
-		foreach (self::getCarFilters() as $filter) {
-			foreach ($data as $filterName => $filterValue) {
-
-				if (is_array($filterValue)) {
-					foreach ($filterValue as $subFilterName => $subFilterValue) {
-						if ($filterName . '.' . $subFilterName == $filter->getFilterName()) {
-							$builder = $filter->handle($builder, $subFilterValue);
-						}
-					}
-				}
-
-				if ($filterName == $filter->getFilterName()) {
-					$builder = $filter->handle($builder, $filterValue);
-				}
-			}
-		}
-		return self::applySortAndPaginate($builder, $data);
-	}
-
-	/**
-	 * Apply the order of sorting and paginate to the result (builder)
-	 *
-	 * @param  \Illuminate\Database\Eloquent\Builder $builder
-	 * @param  array $data
-	 * @return \Illuminate\Pagination\LengthAwarePaginator
-	 */
-	private static function applySortAndPaginate($builder, $data)
-	{
-		$sort 		= isset($data['sort']) ? $data['sort'] : config('api.cars.sort');
-		$order 		= isset($data['order']) ? $data['order'] : config('api.cars.order');
-		$per_page	= isset($data['per_page']) ? $data['per_page'] : config('api.cars.per_page');
-
-		return $builder->orderBy($sort, $order)
-			->paginate($per_page);
 	}
 }
