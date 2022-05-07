@@ -52,9 +52,15 @@ class CarStoreRequest extends FormRequest
 	 */
 	protected function prepareForValidation()
 	{
-		$this->merge([
-			'is_working' => $this->boolean('is_working'),
-			'images_id' => explode(',', $this->images_id),
-		]);
+		$merged = [];
+
+		if (request('is_working')) {
+			$merged['is_working'] = $this->boolean('is_working');
+		}
+		if (request('images_id')) {
+			$merged['images_id'] = explode(',', $this->images_id);
+		}
+
+		$this->merge($merged);
 	}
 }

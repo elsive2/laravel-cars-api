@@ -29,7 +29,7 @@ class CarController extends Controller
 	 */
 	public function index(CarFilterRequest $request)
 	{
-		return $this->resultCollection($this->carService->all(), CarResource::class);
+		return $this->resultCollection($this->carService->all($request->validated()), CarResource::class);
 	}
 
 	/**

@@ -15,8 +15,8 @@ class CarsConstant
 	];
 
 	public const DRIVE_UNIT = [
-		'front-wheel drive',
-		'rear drive',
-		'four-wheel drive'
+		'front-wheel_drive',
+		'rear_drive',
+		'four-wheel_drive'
 	];
 }

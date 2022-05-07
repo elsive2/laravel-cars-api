@@ -15,16 +15,10 @@ class CarService extends BaseService
 		'options.body',
 		'options.gearBox',
 		'options.engine',
-		'options.color'
+		'options.color',
+		'user',
 	];
 
-	/**
-	 * __construct
-	 *
-	 * @param CarRepository $carRepository
-	 * @param OptionRepository $optionRepository
-	 * @return void
-	 */
 	public function __construct(
 		private CarRepository $carRepository,
 		private OptionRepository $optionRepository,
@@ -35,12 +29,12 @@ class CarService extends BaseService
 	/**
 	 * Get all cars
 	 *
+	 * @param array $data
 	 * @return ResultService
 	 */
-	public function all()
+	public function all(array $data)
 	{
-		$cars = CarFilterService::handle($this->carRepository->all(self::TOLOAD));
-
+		$cars = CarFilterService::handle($this->carRepository->all(self::TOLOAD), $data);
 		if (!$cars) {
 			return $this->errService();
 		}
@@ -56,7 +50,6 @@ class CarService extends BaseService
 	public function getById(int $id)
 	{
 		$car = $this->carRepository->getById($id);
-
 		if (is_null($car)) {
 			return $this->errNotFound(__('api.car.not_found'));
 		}
@@ -98,7 +91,6 @@ class CarService extends BaseService
 				return $savingResult;
 			}
 		}
-
 		if (!$car) {
 			return $this->errService();
 		}
@@ -128,7 +120,6 @@ class CarService extends BaseService
 			}
 
 			$savedResult = $this->imageService->addImagesToModel($car->data, $images);
-
 			if (!$savedResult->isSuccess()) {
 				return $savedResult;
 			}
@@ -160,9 +151,7 @@ class CarService extends BaseService
 		if (!$car->isSuccess()) {
 			return $car;
 		}
-
 		$this->carRepository->delete($car->data);
-
 		return $this->successMessage(__('api.car.deleted'));
 	}
 
@@ -180,7 +169,6 @@ class CarService extends BaseService
 		if (!($user instanceof \App\Models\User)) {
 			return $this->errValidate(__('api.auth.not_user_model'));
 		}
-
 		if ($cars = $this->carRepository->getUsersCars($user)) {
 			return $this->successData($cars);
 		}
