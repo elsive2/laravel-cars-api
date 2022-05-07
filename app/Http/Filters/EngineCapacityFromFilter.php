@@ -2,7 +2,7 @@
 
 namespace App\Http\Filters;
 
-class ColorFilter implements QueryFilter
+class EngineCapacityFromFilter implements QueryFilter
 {
 	/**
 	 * Set a filter name
@@ -11,7 +11,7 @@ class ColorFilter implements QueryFilter
 	 */
 	public function getFilterName()
 	{
-		return 'color';
+		return 'engine_capacity.from';
 	}
 
 	/**
@@ -23,8 +23,8 @@ class ColorFilter implements QueryFilter
 	 */
 	public function handle($builder, $value)
 	{
-		return $builder->whereRelation('options.color', function ($subQuery) use ($value) {
-			$subQuery->whereIn('name', $value);
+		return $builder->whereRelation('options', function ($subQuery) use ($value) {
+			$subQuery->where('engine_capacity', '>=', $value);
 		});
 	}
 }

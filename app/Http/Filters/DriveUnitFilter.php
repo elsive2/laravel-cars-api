@@ -18,10 +18,13 @@ class DriveUnitFilter implements QueryFilter
 	 * Apply the filter
 	 *
 	 * @param  \Illuminate\Database\Eloquent\Builder $builder
+	 * @param  mixed $value
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function handle($builder)
+	public function handle($builder, $value)
 	{
-		return $builder->whereRelation('options', 'drive_unit', request($this->getFilterName()));
+		return $builder->whereRelation('options', function ($subQuery) use ($value) {
+			$subQuery->whereIn('drive_unit', $value);
+		});
 	}
 }

@@ -18,10 +18,13 @@ class EngineFilter implements QueryFilter
 	 * Apply the filter
 	 *
 	 * @param  \Illuminate\Database\Eloquent\Builder $builder
+	 * @param  mixed $value
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function handle($builder)
+	public function handle($builder, $value)
 	{
-		return $builder->whereRelation('options.engine', 'name', request($this->getFilterName()));
+		return $builder->whereRelation('options.engine', function ($subQuery) use ($value) {
+			$subQuery->whereIn('name', $value);
+		});
 	}
 }

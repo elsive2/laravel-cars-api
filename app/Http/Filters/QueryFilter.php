@@ -15,7 +15,8 @@ interface QueryFilter
 	 * Handle a filter
 	 *
 	 * @param  \Illuminate\Database\Eloquent\Builder $builder
+	 * @param  mixed $value
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function handle($builder);
+	public function handle($builder, $value);
 }
