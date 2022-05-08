@@ -48,9 +48,7 @@ class CarObject
 			'type',
 			'price',
 			'year',
-			'is_active',
 			'is_working',
-			'option_id',
 			'country_id',
 			'brand_id',
 		]);
