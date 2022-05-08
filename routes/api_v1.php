@@ -47,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::get('my_cars', [CarController::class, 'getUsersCars']);
 
 	Route::apiResource('cars', CarController::class)
-		->only('store', 'update', 'delete');
+		->only('store', 'update', 'destroy');
 
 	Route::apiResource('images', ImageController::class)
 		->except('update');

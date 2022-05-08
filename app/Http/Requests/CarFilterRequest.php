@@ -34,7 +34,6 @@ class CarFilterRequest extends FormRequest
 			'year.from'				=> ['nullable', 'integer', 'between:1885,' . date('Y')],
 			'year.to' 				=> ['nullable', 'integer', 'between:1885,' . date('Y')],
 			'is_working' 			=> ['nullable', 'boolean'],
-			'is_active'				=> ['nullable', 'boolean'],
 			'wheel_position' 		=> ['nullable', Rule::in(CarsConstant::WHEEL_POSITION)],
 			'drive_unit' 			=> ['nullable', 'array', Rule::in(CarsConstant::DRIVE_UNIT)],
 			'mileage.from'			=> ['nullable', 'integer', 'min:0', 'different:mileage.to'],
@@ -65,9 +64,6 @@ class CarFilterRequest extends FormRequest
 
 		if (request('is_working')) {
 			$merged['is_working'] = $this->boolean('is_working');
-		}
-		if (request('is_active')) {
-			$merged['is_active'] = $this->boolean('is_active');
 		}
 		if (request('metalic')) {
 			$merged['metalic'] = $this->boolean('metalic');

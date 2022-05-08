@@ -19,7 +19,6 @@ class CarFilterService extends FilterService
 			\App\Http\Filters\YearFromFilter::class,
 			\App\Http\Filters\YearToFilter::class,
 			\App\Http\Filters\IsWorkingFilter::class,
-			\App\Http\Filters\IsActiveFilter::class,
 			\App\Http\Filters\DriveUnitFilter::class,
 			\App\Http\Filters\WheelPositionFilter::class,
 			\App\Http\Filters\MileageFromFilter::class,

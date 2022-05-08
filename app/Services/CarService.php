@@ -111,6 +111,9 @@ class CarService extends BaseService
 		if (!$car->isSuccess()) {
 			return $car;
 		}
+		if (auth()->user()->id != $car->data->user_id && !auth()->user()->is_admin) {
+			return $this->errForbidden(__('api.car.strange'));
+		}
 		if (isset($data->data->images_id)) {
 			$images = $data->data->images_id;
 			$deletedResult = $this->imageService->deleteAllFrom($car->data);
@@ -150,6 +153,9 @@ class CarService extends BaseService
 
 		if (!$car->isSuccess()) {
 			return $car;
+		}
+		if (auth()->user()->id != $car->data->user_id && !auth()->user()->is_admin) {
+			return $this->errForbidden(__('api.car.strange'));
 		}
 		$this->carRepository->delete($car->data);
 		return $this->successMessage(__('api.car.deleted'));

@@ -89,6 +89,7 @@ return [
 		'success' => 'Success! Your car will be published after moderation!',
 		'updated' => 'Car has been updated!',
 		'deleted' => 'Car has been deleted!',
+		'strange' => 'That car isn\'t yours!',
 	],
 
 	'smth_wrong' => 'Something went wrong!',
