@@ -19,10 +19,6 @@ class EngineService extends BaseService
 	public function all()
 	{
 		$engines = $this->engineRepository->all();
-
-		if ($engines->empty()) {
-			return $this->successMessage(__('api.engine.no'));
-		}
 		return $this->successData($engines);
 	}
 
