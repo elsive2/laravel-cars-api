@@ -8,9 +8,9 @@ use App\Services\BrandService;
 
 class BrandController extends Controller
 {
-	public function __construct(
-		private BrandService $brandService
-	) {
+	public function __construct(private BrandService $brandService)
+	{
+		$this->resource = NameResource::class;
 	}
 
 	/**
@@ -21,7 +21,7 @@ class BrandController extends Controller
 	public function index()
 	{
 		$result = $this->brandService->all();
-		return $this->resultCollection($result, NameResource::class);
+		return $this->resultCollection($result);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class BrandController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->brandService->getById($id);
-		return $this->resultResource($result, NameResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**

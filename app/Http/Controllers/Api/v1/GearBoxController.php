@@ -8,9 +8,9 @@ use App\Services\GearBoxService;
 
 class GearBoxController extends Controller
 {
-	public function __construct(
-		private GearBoxService $gearBoxService
-	) {
+	public function __construct(private GearBoxService $gearBoxService)
+	{
+		$this->resource = NameResource::class;
 	}
 
 	/**
@@ -21,7 +21,7 @@ class GearBoxController extends Controller
 	public function index()
 	{
 		$result = $this->gearBoxService->all();
-		return $this->resultCollection($result, NameResource::class);
+		return $this->resultCollection($result);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class GearBoxController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->gearBoxService->getById($id);
-		return $this->resultResource($result, NameResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**

@@ -8,9 +8,9 @@ use App\Services\ImageService;
 
 class ImageController extends Controller
 {
-	public function __construct(
-		private ImageService $imageService,
-	) {
+	public function __construct(private ImageService $imageService)
+	{
+		$this->resource = ImageResource::class;
 	}
 
 	/**
@@ -21,7 +21,7 @@ class ImageController extends Controller
 	public function index()
 	{
 		$result = $this->imageService->all();
-		return $this->resultCollection($result, ImageResource::class);
+		return $this->resultCollection($result);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class ImageController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->imageService->getById($id);
-		return $this->resultResource($result, ImageResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ImageController extends Controller
 	public function store(ImageRequest $request)
 	{
 		$result = $this->imageService->create($request->file('image'));
-		return $this->resultResource($result, ImageResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**

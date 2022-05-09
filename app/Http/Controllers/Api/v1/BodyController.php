@@ -8,9 +8,9 @@ use App\Services\BodyService;
 
 class BodyController extends Controller
 {
-	public function __construct(
-		private BodyService $bodyService
-	) {
+	public function __construct(private BodyService $bodyService)
+	{
+		$this->resource = NameResource::class;
 	}
 
 	/**
@@ -21,7 +21,7 @@ class BodyController extends Controller
 	public function index()
 	{
 		$result = $this->bodyService->all();
-		return $this->resultCollection($result, NameResource::class);
+		return $this->resultCollection($result);
 	}
 	/**
 	 * Display the specified body.
@@ -32,7 +32,7 @@ class BodyController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->bodyService->getById($id);
-		return $this->resultResource($result, NameResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**

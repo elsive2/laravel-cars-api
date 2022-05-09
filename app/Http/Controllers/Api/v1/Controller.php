@@ -12,6 +12,8 @@ class Controller extends BaseController
 {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+	protected $resource;
+
 	/**
 	 * @param  ResultService $result
 	 * @return \Illuminate\Http\JsonResponse
@@ -23,26 +25,24 @@ class Controller extends BaseController
 
 	/**
 	 * @param  ResultService $result
-	 * @param  \Illuminate\Http\Resources\Json\JsonResource $resourceClass
 	 * @return \Illuminate\Http\Resources\Json\JsonResource|\Illuminate\Http\JsonResponse
 	 */
-	protected function resultResource(ResultService $result, $resourceClass)
+	protected function resultResource(ResultService $result)
 	{
 		if ($result->isSuccess()) {
-			return new $resourceClass($result->data);
+			return new $this->resource($result->data);
 		}
 		return $this->result($result);
 	}
 
 	/**
 	 * @param  ResultService $result
-	 * @param  \Illuminate\Http\Resources\Json\JsonResource	$resourceClass
 	 * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\JsonResponse
 	 */
-	protected function resultCollection(ResultService $result, $resourceClass)
+	protected function resultCollection(ResultService $result)
 	{
 		if ($result->isSuccess()) {
-			return $resourceClass::collection($result->data);
+			return $this->resource::collection($result->data);
 		}
 		return $this->result($result);
 	}

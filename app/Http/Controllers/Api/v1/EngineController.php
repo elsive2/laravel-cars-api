@@ -8,9 +8,9 @@ use App\Http\Requests\EngineRequest;
 
 class EngineController extends Controller
 {
-	public function __construct(
-		private EngineService $engineService
-	) {
+	public function __construct(private EngineService $engineService)
+	{
+		$this->resource = NameResource::class;
 	}
 
 	/**
@@ -21,7 +21,7 @@ class EngineController extends Controller
 	public function index()
 	{
 		$result = $this->engineService->all();
-		return $this->resultCollection($result, NameResource::class);
+		return $this->resultCollection($result);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class EngineController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->engineService->getById($id);
-		return $this->resultResource($result, NameResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**

@@ -11,9 +11,9 @@ use App\Services\CarService;
 
 class CarController extends Controller
 {
-	public function __construct(
-		private CarService $carService
-	) {
+	public function __construct(private CarService $carService)
+	{
+		$this->resource = CarResource::class;
 	}
 
 	/**
@@ -24,7 +24,7 @@ class CarController extends Controller
 	public function index(CarFilterRequest $request)
 	{
 		$result = $this->carService->all($request->validated());
-		return $this->resultCollection($result, CarResource::class);
+		return $this->resultCollection($result);
 	}
 
 	/**
@@ -36,7 +36,7 @@ class CarController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->carService->getById($id);
-		return $this->resultResource($result, CarResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**

@@ -8,9 +8,9 @@ use App\Services\CountryService;
 
 class CountryController extends Controller
 {
-	public function __construct(
-		private CountryService $countryService
-	) {
+	public function __construct(private CountryService $countryService)
+	{
+		$this->resource = NameResource::class;
 	}
 
 	/**
@@ -21,7 +21,7 @@ class CountryController extends Controller
 	public function index()
 	{
 		$result = $this->countryService->all();
-		return $this->resultCollection($result, NameResource::class);
+		return $this->resultCollection($result);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class CountryController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->countryService->getById($id);
-		return $this->resultResource($result, NameResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**

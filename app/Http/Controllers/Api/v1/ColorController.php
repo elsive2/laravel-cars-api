@@ -9,9 +9,9 @@ use App\Services\ColorService;
 
 class ColorController extends Controller
 {
-	public function __construct(
-		private ColorService $colorService
-	) {
+	public function __construct(private ColorService $colorService)
+	{
+		$this->resource = ColorResource::class;
 	}
 
 	/**
@@ -22,7 +22,7 @@ class ColorController extends Controller
 	public function index()
 	{
 		$result = $this->colorService->all();
-		return $this->resultCollection($result, ColorResource::class);
+		return $this->resultCollection($result);
 	}
 
 	/**
@@ -34,7 +34,7 @@ class ColorController extends Controller
 	public function show(int $id)
 	{
 		$result = $this->colorService->getById($id);
-		return $this->resultResource($result, ColorResource::class);
+		return $this->resultResource($result);
 	}
 
 	/**
