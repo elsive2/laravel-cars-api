@@ -6,12 +6,6 @@ use App\Repositories\CountryRepository;
 
 class CountryService extends BaseService
 {
-	/**
-	 * __construct
-	 *
-	 * @param CountryRepository $countryRepository
-	 * @return void
-	 */
 	public function __construct(
 		private CountryRepository $countryRepository
 	) {
@@ -25,10 +19,6 @@ class CountryService extends BaseService
 	public function all()
 	{
 		$countries = $this->countryRepository->all();
-
-		if (!$countries) {
-			return $this->errService();
-		}
 		return $this->successData($countries);
 	}
 
@@ -45,53 +35,36 @@ class CountryService extends BaseService
 		if (is_null($country)) {
 			return $this->errNotFound();
 		}
-
-		if (!($country instanceof \App\Models\Country)) {
-			return $this->errValidate(__('api.country.not_country_model'));
-		}
 		return $this->successData($country);
 	}
 
 	/**
 	 * Create a country
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @return ResultService
 	 */
-	public function create($data)
+	public function create(array $data)
 	{
-		$country = $this->countryRepository->create($data->toArray());
-
-		if (!($country instanceof \App\Models\Country)) {
-			return $this->errValidate(__('api.country.not_country_model'));
-		}
-
-		if (!$country) {
-			return $this->errService();
-		}
+		$this->countryRepository->create($data);
 		return $this->successMessage(__('api.country.created'));
 	}
 
 	/**
 	 * Update a country by its id
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @param  int $id
 	 * @return ResultService
 	 */
-	public function update($data, int $id)
+	public function update(array $data, int $id)
 	{
 		$country = $this->getById($id);
 
 		if (!$country->isSuccess()) {
 			return $country;
 		}
-
-		$isUpdated = $this->countryRepository->update($data->toArray(), $country->data);
-
-		if (!$isUpdated) {
-			return $this->errService();
-		}
+		$this->countryRepository->update($data, $country->data);
 		return $this->successMessage(__('api.country.updated'));
 	}
 
@@ -108,9 +81,7 @@ class CountryService extends BaseService
 		if (!$country->isSuccess()) {
 			return $country;
 		}
-
 		$this->countryRepository->delete($country->data);
-
 		return $this->successMessage(__('api.country.deleted'));
 	}
 }

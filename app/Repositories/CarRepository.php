@@ -9,12 +9,21 @@ class CarRepository
 	/**
 	 * Get all cars
 	 *
-	 * @param  array|string $toLoad
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function all($toLoad)
+	public function all()
 	{
-		return Car::with($toLoad)->where('is_active', 1);
+		return Car::with([
+			'brand',
+			'country',
+			'images',
+			'options',
+			'options.body',
+			'options.gearBox',
+			'options.engine',
+			'options.color',
+			'user'
+		])->where('is_active', 1);
 	}
 
 	/**

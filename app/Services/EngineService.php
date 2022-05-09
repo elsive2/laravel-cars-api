@@ -6,12 +6,6 @@ use App\Repositories\EngineRepository;
 
 class EngineService extends BaseService
 {
-	/**
-	 * __construct
-	 *
-	 * @param EngineRepository $engineRepository
-	 * @return ResultService
-	 */
 	public function __construct(
 		private EngineRepository $engineRepository
 	) {
@@ -26,8 +20,8 @@ class EngineService extends BaseService
 	{
 		$engines = $this->engineRepository->all();
 
-		if (!$engines) {
-			return $this->errService();
+		if ($engines->empty()) {
+			return $this->successMessage(__('api.engine.no'));
 		}
 		return $this->successData($engines);
 	}
@@ -45,53 +39,36 @@ class EngineService extends BaseService
 		if (is_null($engine)) {
 			return $this->errNotFound();
 		}
-
-		if (!($engine instanceof \App\Models\Engine)) {
-			return $this->errValidate(__('api.engine.not_engine_model'));
-		}
 		return $this->successData($engine);
 	}
 
 	/**
 	 * Create an engine
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @return ResultService
 	 */
-	public function create($data)
+	public function create(array $data)
 	{
-		$engine = $this->engineRepository->create($data->toArray());
-
-		if (!($engine instanceof \App\Models\Engine)) {
-			return $this->errValidate(__('api.engine.not_engine_model'));
-		}
-
-		if (!$engine) {
-			return $this->errService();
-		}
+		$this->engineRepository->create($data);
 		return $this->successMessage(__('api.engine.created'));
 	}
 
 	/**
 	 * Update an engine by its id
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @param  int $id
 	 * @return ResultService
 	 */
-	public function update($data, int $id)
+	public function update(array $data, int $id)
 	{
 		$engine = $this->getById($id);
 
 		if (!$engine->isSuccess()) {
 			return $engine;
 		}
-
-		$isUpdated = $this->engineRepository->update($data->toArray(), $engine->data);
-
-		if (!$isUpdated) {
-			return $this->errService();
-		}
+		$this->engineRepository->update($data, $engine->data);
 		return $this->successMessage(__('api.engine.updated'));
 	}
 
@@ -108,9 +85,7 @@ class EngineService extends BaseService
 		if (!$engine->isSuccess()) {
 			return $engine;
 		}
-
 		$this->engineRepository->delete($engine->data);
-
 		return $this->successMessage(__('api.engine.deleted'));
 	}
 }

@@ -6,12 +6,6 @@ use App\Repositories\BrandRepository;
 
 class BrandService extends BaseService
 {
-	/**
-	 * __construct
-	 *
-	 * @param BrandRepository $brandRepository
-	 * @return void
-	 */
 	public function __construct(
 		private BrandRepository $brandRepository
 	) {
@@ -25,10 +19,6 @@ class BrandService extends BaseService
 	public function all()
 	{
 		$brands = $this->brandRepository->all();
-
-		if (!$brands) {
-			return $this->errService();
-		}
 		return $this->successData($brands);
 	}
 
@@ -45,26 +35,18 @@ class BrandService extends BaseService
 		if (is_null($brand)) {
 			return $this->errNotFound();
 		}
-
-		if (!($brand instanceof \App\Models\Brand)) {
-			return $this->errValidate(__('api.brand.not_brand_model'));
-		}
 		return $this->successData($brand);
 	}
 
 	/**
 	 * Create a brand
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @return ResultService
 	 */
-	public function create($data)
+	public function create(array $data)
 	{
-		$brand = $this->brandRepository->create($data->toArray());
-
-		if (!($brand instanceof \App\Models\Brand)) {
-			return $this->errValidate(__('api.brand.not_brand_model'));
-		}
+		$brand = $this->brandRepository->create($data);
 
 		if (!$brand) {
 			return $this->errService();
@@ -75,23 +57,18 @@ class BrandService extends BaseService
 	/**
 	 * Update a brand by its id
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @param  int $id
 	 * @return ResultService
 	 */
-	public function update($data, int $id)
+	public function update(array $data, int $id)
 	{
 		$brand = $this->getById($id);
 
 		if (!$brand->isSuccess()) {
 			return $brand;
 		}
-
-		$isUpdated = $this->brandRepository->update($data->toArray(), $brand->data);
-
-		if (!$isUpdated) {
-			return $this->errService();
-		}
+		$this->brandRepository->update($data, $brand->data);
 		return $this->successMessage(__('api.brand.updated'));
 	}
 
@@ -108,9 +85,7 @@ class BrandService extends BaseService
 		if (!$brand->isSuccess()) {
 			return $brand;
 		}
-
 		$this->brandRepository->delete($brand->data);
-
 		return $this->successMessage(__('api.brand.deleted'));
 	}
 }

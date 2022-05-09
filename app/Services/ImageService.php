@@ -3,16 +3,9 @@
 namespace App\Services;
 
 use App\Repositories\imageRepository;
-use Illuminate\Support\Facades\Storage;
 
 class ImageService extends BaseService
 {
-	/**
-	 * __construct
-	 *
-	 * @param ImageRepository $imageRepository
-	 * @return void
-	 */
 	public function __construct(
 		private imageRepository $imageRepository
 	) {
@@ -26,10 +19,6 @@ class ImageService extends BaseService
 	public function all()
 	{
 		$images = $this->imageRepository->all();
-
-		if (!$images) {
-			return $this->errService();
-		}
 		return $this->successData($images);
 	}
 
@@ -45,10 +34,6 @@ class ImageService extends BaseService
 
 		if (is_null($image)) {
 			return $this->errNotFound(__('api.image.not_found'));
-		}
-
-		if (!($image instanceof \App\Models\Image)) {
-			return $this->errValidate(__('api.image.not_image_model'));
 		}
 		return $this->successData($image);
 	}
@@ -70,16 +55,12 @@ class ImageService extends BaseService
 			if (!$image->isSuccess()) {
 				return $image;
 			}
-			if ($image->data->car) {
+			if (!is_null($image->data->car_id)) {
 				return $this->errValidate(__('api.image.used', ['id' => $id]));
 			}
-
 			$images[] = $image->data;
 		}
-
-		if (!$this->imageRepository->saveImagesToModel($model, $images)) {
-			return $this->errService();
-		}
+		$this->imageRepository->saveImagesToModel($model, $images);
 		return $this->successMessage(__('api.image.saved'));
 	}
 
@@ -92,14 +73,7 @@ class ImageService extends BaseService
 	public function create($file)
 	{
 		$image = $file->storePublicly('images');
-
-		if (!$image) {
-			return $this->errValidate(__('api.image.loaded'));
-		}
-		if (!($model = $this->imageRepository->create($image))) {
-			return $this->errService();
-		}
-		return $this->successData($model);
+		return $this->successData($this->imageRepository->create($image));
 	}
 
 	/**
@@ -116,7 +90,6 @@ class ImageService extends BaseService
 			return $image;
 		}
 		$this->imageRepository->delete($image->data);
-
 		return $this->successMessage(__('api.image.deleted'));
 	}
 
@@ -129,7 +102,6 @@ class ImageService extends BaseService
 	public function deleteAllFrom($model)
 	{
 		$this->imageRepository->deleteAllFrom($model);
-
 		return $this->successMessage(__('api.image.deleted_plural'));
 	}
 }

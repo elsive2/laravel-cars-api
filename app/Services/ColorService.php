@@ -6,12 +6,6 @@ use App\Repositories\ColorRepository;
 
 class ColorService extends BaseService
 {
-	/**
-	 * __construct
-	 *
-	 * @param ColorRepository $colorRepository
-	 * @return void
-	 */
 	public function __construct(
 		private ColorRepository $colorRepository
 	) {
@@ -25,10 +19,6 @@ class ColorService extends BaseService
 	public function all()
 	{
 		$colors = $this->colorRepository->all();
-
-		if (!$colors) {
-			return $this->errService();
-		}
 		return $this->successData($colors);
 	}
 
@@ -45,53 +35,36 @@ class ColorService extends BaseService
 		if (is_null($color)) {
 			return $this->errNotFound();
 		}
-
-		if (!($color instanceof \App\Models\Color)) {
-			return $this->errValidate(__('api.color.not_color_model'));
-		}
 		return $this->successData($color);
 	}
 
 	/**
 	 * Create a color
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @return ResultService
 	 */
-	public function create($data)
+	public function create(array $data)
 	{
-		$color = $this->colorRepository->create($data->toArray());
-
-		if (!($color instanceof \App\Models\Color)) {
-			return $this->errValidate(__('api.color.not_color_model'));
-		}
-
-		if (!$color) {
-			return $this->errService();
-		}
+		$this->colorRepository->create($data);
 		return $this->successMessage(__('api.color.created'));
 	}
 
 	/**
 	 * Update a color by its id
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @param  int $id
 	 * @return ResultService
 	 */
-	public function update($data, int $id)
+	public function update(array $data, int $id)
 	{
 		$color = $this->getById($id);
 
 		if (!$color->isSuccess()) {
 			return $color;
 		}
-
-		$isUpdated = $this->colorRepository->update($data->toArray(), $color->data);
-
-		if (!$isUpdated) {
-			return $this->errService();
-		}
+		$this->colorRepository->update($data, $color->data);
 		return $this->successMessage(__('api.color.updated'));
 	}
 
@@ -108,9 +81,7 @@ class ColorService extends BaseService
 		if (!$color->isSuccess()) {
 			return $color;
 		}
-
 		$this->colorRepository->delete($color->data);
-
 		return $this->successMessage(__('api.color.deleted'));
 	}
 }

@@ -13,7 +13,6 @@ abstract class BaseService
 	protected function errValidate($message = null)
 	{
 		Log::error(__('api.base.validate'));
-
 		return $this->message(422, $message ?? __('api.base.validate'));
 	}
 
@@ -24,7 +23,6 @@ abstract class BaseService
 	protected function errForbidden($message = null)
 	{
 		Log::error(__('api.base.forbidden'));
-
 		return $this->message(403, $message ?? __('api.base.forbidden'));
 	}
 
@@ -35,7 +33,6 @@ abstract class BaseService
 	protected function errNotFound($message = null)
 	{
 		Log::error(__('api.base.not_found'));
-
 		return $this->message(404, $message ?? __('api.base.not_found'));
 	}
 
@@ -46,7 +43,6 @@ abstract class BaseService
 	protected function errService($message = null)
 	{
 		Log::error(__('api.smth_wrong'));
-
 		return $this->message(500, $message ?? __('api.smth_wrong'));
 	}
 
@@ -57,7 +53,6 @@ abstract class BaseService
 	protected function successMessage(string $message)
 	{
 		Log::info($message);
-
 		return $this->message(200, $message);
 	}
 
@@ -65,10 +60,9 @@ abstract class BaseService
 	 * @param  mixed $data
 	 * @return ResultService
 	 */
-	protected function successData(mixed $data)
+	protected function successData($data)
 	{
 		Log::info(__('api.base.sent'));
-
 		return new ResultService([
 			'data' => $data,
 			'code' => 200,

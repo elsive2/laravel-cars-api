@@ -25,10 +25,6 @@ class GearBoxService extends BaseService
 	public function all()
 	{
 		$gearBoxes = $this->gearBoxRepository->all();
-
-		if (!$gearBoxes) {
-			return $this->errService();
-		}
 		return $this->successData($gearBoxes);
 	}
 
@@ -45,53 +41,36 @@ class GearBoxService extends BaseService
 		if (is_null($gearBox)) {
 			return $this->errNotFound();
 		}
-
-		if (!($gearBox instanceof \App\Models\GearBox)) {
-			return $this->errValidate(__('api.gear_box.not_gear_box_model'));
-		}
 		return $this->successData($gearBox);
 	}
 
 	/**
 	 * Create a gear box
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @return ResultService
 	 */
-	public function create($data)
+	public function create(array $data)
 	{
-		$gearBox = $this->gearBoxRepository->create($data->toArray());
-
-		if (!($gearBox instanceof \App\Models\GearBox)) {
-			return $this->errValidate(__('api.gear_box.not_gear_box_model'));
-		}
-
-		if (!$gearBox) {
-			return $this->errService();
-		}
+		$this->gearBoxRepository->create($data);
 		return $this->successMessage(__('api.gear_box.created'));
 	}
 
 	/**
 	 * Update a gear box by its id
 	 *
-	 * @param  \Illuminate\Support\ValidatedInput $data
+	 * @param  array $data
 	 * @param  int $id
 	 * @return ResultService
 	 */
-	public function update($data, int $id)
+	public function update(array $data, int $id)
 	{
 		$gearBox = $this->getById($id);
 
 		if (!$gearBox->isSuccess()) {
 			return $gearBox;
 		}
-
-		$isUpdated = $this->gearBoxRepository->update($data->toArray(), $gearBox->data);
-
-		if (!$isUpdated) {
-			return $this->errService();
-		}
+		$this->gearBoxRepository->update($data, $gearBox->data);
 		return $this->successMessage(__('api.gear_box.updated'));
 	}
 
@@ -108,9 +87,7 @@ class GearBoxService extends BaseService
 		if (!$gearBox->isSuccess()) {
 			return $gearBox;
 		}
-
 		$this->gearBoxRepository->delete($gearBox->data);
-
 		return $this->successMessage(__('api.gear_box.deleted'));
 	}
 }
