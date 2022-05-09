@@ -8,12 +8,6 @@ use App\Services\BrandService;
 
 class BrandController extends Controller
 {
-	/**
-	 * __construct
-	 *
-	 * @param BrandService $brandService
-	 * @return void
-	 */
 	public function __construct(
 		private BrandService $brandService
 	) {
@@ -26,7 +20,8 @@ class BrandController extends Controller
 	 */
 	public function index()
 	{
-		return $this->resultCollection($this->brandService->all(), NameResource::class);
+		$result = $this->brandService->all();
+		return $this->resultCollection($result, NameResource::class);
 	}
 
 	/**
@@ -37,7 +32,8 @@ class BrandController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return $this->resultResource($this->brandService->getById($id), NameResource::class);
+		$result = $this->brandService->getById($id);
+		return $this->resultResource($result, NameResource::class);
 	}
 
 	/**
@@ -48,7 +44,8 @@ class BrandController extends Controller
 	 */
 	public function store(BrandRequest $request)
 	{
-		return $this->result($this->brandService->create($request->safe()));
+		$result = $this->brandService->create($request->validated());
+		return $this->result($result);
 	}
 
 	/**
@@ -60,7 +57,8 @@ class BrandController extends Controller
 	 */
 	public function update(BrandRequest $request, int $id)
 	{
-		return $this->result($this->brandService->update($request->safe(), $id));
+		$result = $this->brandService->update($request->validated(), $id);
+		return $this->result($result);
 	}
 
 	/**
@@ -71,6 +69,7 @@ class BrandController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		return $this->result($this->brandService->delete($id));
+		$result = $this->brandService->delete($id);
+		return $this->result($result);
 	}
 }

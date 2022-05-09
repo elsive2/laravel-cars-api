@@ -9,12 +9,6 @@ use App\Services\ColorService;
 
 class ColorController extends Controller
 {
-	/**
-	 * __construct
-	 *
-	 * @param ColorService $colorService
-	 * @return void
-	 */
 	public function __construct(
 		private ColorService $colorService
 	) {
@@ -27,7 +21,8 @@ class ColorController extends Controller
 	 */
 	public function index()
 	{
-		return $this->resultCollection($this->colorService->all(), ColorResource::class);
+		$result = $this->colorService->all();
+		return $this->resultCollection($result, ColorResource::class);
 	}
 
 	/**
@@ -38,7 +33,8 @@ class ColorController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return $this->resultResource($this->colorService->getById($id), ColorResource::class);
+		$result = $this->colorService->getById($id);
+		return $this->resultResource($result, ColorResource::class);
 	}
 
 	/**
@@ -49,7 +45,8 @@ class ColorController extends Controller
 	 */
 	public function store(ColorStoreRequest $request)
 	{
-		return $this->result($this->colorService->create($request->safe()));
+		$result = $this->colorService->create($request->validated());
+		return $this->result($result);
 	}
 
 	/**
@@ -61,7 +58,8 @@ class ColorController extends Controller
 	 */
 	public function update(ColorUpdateRequest $request, int $id)
 	{
-		return $this->result($this->colorService->update($request->safe(), $id));
+		$result = $this->colorService->update($request->validated(), $id);
+		return $this->result($result);
 	}
 
 	/**
@@ -72,6 +70,7 @@ class ColorController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		return $this->result($this->colorService->delete($id));
+		$result = $this->colorService->delete($id);
+		return $this->result($result);
 	}
 }

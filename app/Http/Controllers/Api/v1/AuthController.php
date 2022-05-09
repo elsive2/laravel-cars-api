@@ -8,12 +8,6 @@ use App\Services\AuthService;
 
 class AuthController extends Controller
 {
-	/**
-	 * __construct
-	 * 
-	 * @param AuthService $authService
-	 * @return void
-	 */
 	public function __construct(
 		private AuthService $authService
 	) {
@@ -27,7 +21,8 @@ class AuthController extends Controller
 	 */
 	public function register(RegisterRequest $request)
 	{
-		return $this->result($this->authService->register($request->safe()));
+		$result = $this->authService->register($request->validated());
+		return $this->result($result);
 	}
 
 	/**
@@ -38,7 +33,8 @@ class AuthController extends Controller
 	 */
 	public function login(LoginRequest $request)
 	{
-		return $this->reusltToken($this->authService->login($request->safe()));
+		$result = $this->authService->login($request->validated());
+		return $this->reusltToken($result);
 	}
 
 	/**
@@ -48,6 +44,7 @@ class AuthController extends Controller
 	 */
 	public function logout()
 	{
-		return $this->result($this->authService->logout());
+		$result = $this->authService->logout();
+		return $this->result($result);
 	}
 }

@@ -8,12 +8,6 @@ use App\Services\BodyService;
 
 class BodyController extends Controller
 {
-	/**
-	 * __construct
-	 *
-	 * @param BodyService $bodyService
-	 * @return void
-	 */
 	public function __construct(
 		private BodyService $bodyService
 	) {
@@ -26,7 +20,8 @@ class BodyController extends Controller
 	 */
 	public function index()
 	{
-		return $this->resultCollection($this->bodyService->all(), NameResource::class);
+		$result = $this->bodyService->all();
+		return $this->resultCollection($result, NameResource::class);
 	}
 	/**
 	 * Display the specified body.
@@ -36,7 +31,8 @@ class BodyController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return $this->resultResource($this->bodyService->getById($id), NameResource::class);
+		$result = $this->bodyService->getById($id);
+		return $this->resultResource($result, NameResource::class);
 	}
 
 	/**
@@ -47,7 +43,8 @@ class BodyController extends Controller
 	 */
 	public function store(BodyRequest $request)
 	{
-		return $this->result($this->bodyService->create($request->safe()));
+		$result = $this->bodyService->create($request->validated());
+		return $this->result($result);
 	}
 
 	/**
@@ -59,7 +56,8 @@ class BodyController extends Controller
 	 */
 	public function update(BodyRequest $request, int $id)
 	{
-		return $this->result($this->bodyService->update($request->safe(), $id));
+		$result = $this->bodyService->update($request->validated(), $id);
+		return $this->result($result);
 	}
 
 	/**
@@ -70,6 +68,7 @@ class BodyController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		return $this->result($this->bodyService->delete($id));
+		$result = $this->bodyService->delete($id);
+		return $this->result($result);
 	}
 }

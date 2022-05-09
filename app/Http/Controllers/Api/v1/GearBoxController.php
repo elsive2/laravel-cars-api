@@ -8,12 +8,6 @@ use App\Services\GearBoxService;
 
 class GearBoxController extends Controller
 {
-	/**
-	 * __construct
-	 *
-	 * @param GearBoxService $gearBoxService
-	 * @return void
-	 */
 	public function __construct(
 		private GearBoxService $gearBoxService
 	) {
@@ -26,7 +20,8 @@ class GearBoxController extends Controller
 	 */
 	public function index()
 	{
-		return $this->resultCollection($this->gearBoxService->all(), NameResource::class);
+		$result = $this->gearBoxService->all();
+		return $this->resultCollection($result, NameResource::class);
 	}
 
 	/**
@@ -37,7 +32,8 @@ class GearBoxController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return $this->resultResource($this->gearBoxService->getById($id), NameResource::class);
+		$result = $this->gearBoxService->getById($id);
+		return $this->resultResource($result, NameResource::class);
 	}
 
 	/**
@@ -48,7 +44,8 @@ class GearBoxController extends Controller
 	 */
 	public function store(GearBoxRequest $request)
 	{
-		return $this->result($this->gearBoxService->create($request->safe()));
+		$result = $this->gearBoxService->create($request->validated());
+		return $this->result($result);
 	}
 
 	/**
@@ -60,7 +57,8 @@ class GearBoxController extends Controller
 	 */
 	public function update(GearBoxRequest $request, int $id)
 	{
-		return $this->result($this->gearBoxService->update($request->safe(), $id));
+		$result = $this->gearBoxService->update($request->validated(), $id);
+		return $this->result($result);
 	}
 
 	/**
@@ -71,6 +69,7 @@ class GearBoxController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		return $this->result($this->gearBoxService->delete($id));
+		$result = $this->gearBoxService->delete($id);
+		return $this->result($result);
 	}
 }

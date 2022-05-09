@@ -8,12 +8,6 @@ use App\Services\CountryService;
 
 class CountryController extends Controller
 {
-	/**
-	 * __construct
-	 *
-	 * @param CountryService $countryService
-	 * @return void
-	 */
 	public function __construct(
 		private CountryService $countryService
 	) {
@@ -26,7 +20,8 @@ class CountryController extends Controller
 	 */
 	public function index()
 	{
-		return $this->resultCollection($this->countryService->all(), NameResource::class);
+		$result = $this->countryService->all();
+		return $this->resultCollection($result, NameResource::class);
 	}
 
 	/**
@@ -37,7 +32,8 @@ class CountryController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return $this->resultResource($this->countryService->getById($id), NameResource::class);
+		$result = $this->countryService->getById($id);
+		return $this->resultResource($result, NameResource::class);
 	}
 
 	/**
@@ -48,7 +44,8 @@ class CountryController extends Controller
 	 */
 	public function store(CountryRequest $request)
 	{
-		return $this->result($this->countryService->create($request->safe()));
+		$result = $this->countryService->create($request->validated());
+		return $this->result($result);
 	}
 
 	/**
@@ -60,7 +57,8 @@ class CountryController extends Controller
 	 */
 	public function update(CountryRequest $request, int $id)
 	{
-		return $this->result($this->countryService->update($request->safe(), $id));
+		$result = $this->countryService->update($request->validated(), $id);
+		return $this->result($result);
 	}
 
 	/**
@@ -71,6 +69,7 @@ class CountryController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		return $this->result($this->countryService->delete($id));
+		$result = $this->countryService->delete($id);
+		return $this->result($result);
 	}
 }

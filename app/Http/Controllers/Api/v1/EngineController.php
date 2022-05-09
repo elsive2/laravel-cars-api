@@ -8,12 +8,6 @@ use App\Http\Requests\EngineRequest;
 
 class EngineController extends Controller
 {
-	/**
-	 * __construct
-	 *
-	 * @param EngineService $engineService
-	 * @return void
-	 */
 	public function __construct(
 		private EngineService $engineService
 	) {
@@ -26,7 +20,8 @@ class EngineController extends Controller
 	 */
 	public function index()
 	{
-		return $this->resultCollection($this->engineService->all(), NameResource::class);
+		$result = $this->engineService->all();
+		return $this->resultCollection($result, NameResource::class);
 	}
 
 	/**
@@ -37,7 +32,8 @@ class EngineController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return $this->resultResource($this->engineService->getById($id), NameResource::class);
+		$result = $this->engineService->getById($id);
+		return $this->resultResource($result, NameResource::class);
 	}
 
 	/**
@@ -48,7 +44,8 @@ class EngineController extends Controller
 	 */
 	public function store(EngineRequest $request)
 	{
-		return $this->result($this->engineService->create($request->safe()));
+		$result = $this->engineService->create($request->validated());
+		return $this->result($result);
 	}
 
 	/**
@@ -60,7 +57,8 @@ class EngineController extends Controller
 	 */
 	public function update(EngineRequest $request, int $id)
 	{
-		return $this->result($this->engineService->update($request->safe(), $id));
+		$result = $this->engineService->update($request->validated(), $id);
+		return $this->result($result);
 	}
 
 	/**
@@ -71,6 +69,7 @@ class EngineController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		return $this->result($this->engineService->delete($id));
+		$result = $this->engineService->delete($id);
+		return $this->result($result);
 	}
 }

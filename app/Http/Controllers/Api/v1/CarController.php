@@ -11,12 +11,6 @@ use App\Services\CarService;
 
 class CarController extends Controller
 {
-	/**
-	 * __construct
-	 *
-	 * @param  CarService $carService
-	 * @return void
-	 */
 	public function __construct(
 		private CarService $carService
 	) {
@@ -29,7 +23,8 @@ class CarController extends Controller
 	 */
 	public function index(CarFilterRequest $request)
 	{
-		return $this->resultCollection($this->carService->all($request->validated()), CarResource::class);
+		$result = $this->carService->all($request->validated());
+		return $this->resultCollection($result, CarResource::class);
 	}
 
 	/**
@@ -40,7 +35,8 @@ class CarController extends Controller
 	 */
 	public function show(int $id)
 	{
-		return $this->resultResource($this->carService->getById($id), CarResource::class);
+		$result = $this->carService->getById($id);
+		return $this->resultResource($result, CarResource::class);
 	}
 
 	/**
@@ -51,9 +47,8 @@ class CarController extends Controller
 	 */
 	public function store(CarStoreRequest $request)
 	{
-		return $this->result(
-			$this->carService->create(new CarObject($request->safe()))
-		);
+		$result = $this->carService->create(new CarObject($request->safe()));
+		return $this->result($result);
 	}
 
 	/**
@@ -65,9 +60,8 @@ class CarController extends Controller
 	 */
 	public function update(CarUpdateRequest $request, int $id)
 	{
-		return $this->result(
-			$this->carService->update(new CarObject($request->safe()), $id)
-		);
+		$result = $this->carService->update(new CarObject($request->safe()), $id);
+		return $this->result($result);
 	}
 
 	/**
@@ -78,7 +72,8 @@ class CarController extends Controller
 	 */
 	public function destroy(int $id)
 	{
-		return $this->result($this->carService->delete($id));
+		$result = $this->carService->delete($id);
+		return $this->result($result);
 	}
 
 	/**
@@ -88,6 +83,7 @@ class CarController extends Controller
 	 */
 	public function getUsersCars()
 	{
-		return $this->resultCollection($this->carService->getUsersCars(auth()->user()), CarResource::class);
+		$result = $this->carService->getUsersCars(auth()->user());
+		return $this->resultCollection($result, CarResource::class);
 	}
 }
