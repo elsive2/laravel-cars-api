@@ -22,3 +22,4 @@ In addition, i'd like to say that it's my first time when i use phpunit tests
 ![404](/public/readme/1.png)
 ![404](/public/readme/2.png)
 ![404](/public/readme/3.png)
+![404](/public/readme/4.png)
